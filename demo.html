@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <meta charset=utf-8 />
+  <title>Leaflet.EasyButtons</title>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
+
+<!--  <link href='dist/leaflet.fullscreen.css' rel='stylesheet' />-->
+<!--  <script src='dist/Leaflet.fullscreen.min.js'></script>-->
+</head>
+  
+<body>
+  <div class='limiter'>
+    <div class='col10 margin1 pad4y'>
+      <h1>Leaflet.EasyButtons</h1>
+      <p>
+        <i class="fa fa-user fa-2x"></i>
+        <i class="fa fa-arrow-right fa-2x"></i>
+        <i class="fa fa-users fa-2x"></i>
+        <span>Location sharing for leaflet</span>
+      </p>
+      <div id='map' class='col12 row10 space-bottom'></div>
+      <p>For usage, check out the <a href='https://github.com/CliffCloud/Leaflet.EasyButtons'>project on GitHub</a>.</p>
+    </div>
+  </div>
+<script>
+  var map = L.map('map', {
+    climbSearch: true
+  }).setView([37.8, -96], 4);
+
+  L.tileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-9ijuk24y/{z}/{x}/{y}.png', {
+    attribution: '<a href=\'http://mapbox.com/about/maps\' target=\'_blank\'>Terms & Feedback</a>'
+  }).addTo(map);
+</script>
+  <script src='easy-buttons.js'></script>
+</body>
+  
+</html>
