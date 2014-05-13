@@ -27,18 +27,23 @@ L.Control.EasyButtons = L.Control.extend({
     },
 });
 
-function easyButton( btnIcon , btnTitle , btnFunction , btnMap ) {
+L.easyButton = {}
+
+L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap ) {
   var newControl = new L.Control.EasyButtons
   newControl.options.intentedIcon = btnIcon
+  
   if ( typeof btnFunction === 'function'){
     newControl.intendedFunction = btnFunction
   } 
-  newControl.options.title = btnTitle
+  
+  if (btnTitle) newControl.options.title = btnTitle
+  
   if ( btnMap ){
     newControl.addTo(btnMap)
   } else {
-    newControl.addTo(btnMap)
+    newControl.addTo(map)
   }
 }
 
-easyButton( 'fa-exclamation-triangle', 'here' , function(){alert('batham')} , map )
+L.easyButton( 'fa-exclamation-triangle', function(){alert('batham')} , 'here' , map )
