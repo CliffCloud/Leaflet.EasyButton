@@ -1,7 +1,7 @@
 L.Control.EasyButtons = L.Control.extend({
     options: {
         position: 'topleft',
-        title: 'Locate Me',
+        title: '',
         intentedIcon: 'fa-circle-o'
     },
 
@@ -31,7 +31,7 @@ L.easyButton = {}
 
 L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap ) {
   var newControl = new L.Control.EasyButtons
-  newControl.options.intentedIcon = btnIcon
+  if (btnIcon) newControl.options.intentedIcon = btnIcon
   
   if ( typeof btnFunction === 'function'){
     newControl.intendedFunction = btnFunction
@@ -45,5 +45,3 @@ L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap ) {
     newControl.addTo(map)
   }
 }
-
-L.easyButton( 'fa-exclamation-triangle', function(){alert('batham')} , 'here' , map )
