@@ -53,7 +53,7 @@
                 <li>The new button will be added to whatever is stored in variable <code>map</code></li>
               </ol>
               <p>
-                This is Leaflet plug-in that uses Font Awesome, so make sure both are included!
+                This Leaflet plug-in that uses Font Awesome; make sure both are included!
                 <span style="opacity:.7;">Links to the CDNs are at the bottom of the page</span>
               </p>
             </div>
@@ -71,23 +71,20 @@
         </div>
       </div>
       <hr/>
-      <p>L.easyButton must also be included after:</p>
-      <code>&lt;link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"&gt;</code>
-      <code>&lt;link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" /&gt;</code>
-      <code>&lt;script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"&gt;&lt;/script&gt;</code>
+      <div style="text-align:center;">
+        <p>L.easyButton must be included after:</p>
+        <code>&lt;link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"&gt;</code>
+        <code>&lt;link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" /&gt;</code>
+        <code>&lt;script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"&gt;&lt;/script&gt;</code>
+      </div>
 
     </div>
     
   </body>
   <foot>
     <script>
-      var map = L.map('map', {
-        climbSearch: true
-      }).setView([37.8, -96], 4);
-
-      L.tileLayer('http://{s}.tiles.mapbox.com/v3/examples.map-9ijuk24y/{z}/{x}/{y}.png', {
-        attribution: '<a href=\'http://mapbox.com/about/maps\' target=\'_blank\'>Terms & Feedback</a>'
-      }).addTo(map);
+      var map = L.map('map', {}).setView([37.8, -96], 4);
+      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
     </script>
     <script src='easy-button.js'></script>
     <script>
