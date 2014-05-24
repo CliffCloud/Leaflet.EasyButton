@@ -13,12 +13,12 @@ L.Control.EasyButtons = L.Control.extend({
         this.link.href = '#';
 
         L.DomEvent.on(this.link, 'click', this._click, this);
-        this.link.title = this.options.title
+        this.link.title = this.options.title;
 
         return container;
     },
     
-    intendedFunction: function(){ alert('no function selected')},
+    intendedFunction: function(){ alert('no function selected');},
   
     _click: function (e) {
         L.DomEvent.stopPropagation(e);
@@ -30,18 +30,18 @@ L.Control.EasyButtons = L.Control.extend({
 L.easyButton = {}
 
 L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap ) {
-  var newControl = new L.Control.EasyButtons
-  if (btnIcon) newControl.options.intentedIcon = btnIcon
+  var newControl = new L.Control.EasyButtons;
+  if (btnIcon) newControl.options.intentedIcon = btnIcon;
   
   if ( typeof btnFunction === 'function'){
-    newControl.intendedFunction = btnFunction
+    newControl.intendedFunction = btnFunction;
   } 
   
-  if (btnTitle) newControl.options.title = btnTitle
+  if (btnTitle) newControl.options.title = btnTitle;
   
   if ( btnMap ){
-    newControl.addTo(btnMap)
+    newControl.addTo(btnMap);
   } else {
-    newControl.addTo(map)
+    newControl.addTo(map);
   }
-}
+};
