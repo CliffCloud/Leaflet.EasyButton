@@ -42,4 +42,5 @@ L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap ) {
   } else {
     newControl.addTo(map);
   }
+  return newControl;
 };
