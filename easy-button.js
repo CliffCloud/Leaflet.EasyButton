@@ -27,8 +27,6 @@ L.Control.EasyButtons = L.Control.extend({
     },
 });
 
-L.easyButton = {}
-
 L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap ) {
   var newControl = new L.Control.EasyButtons;
   if (btnIcon) newControl.options.intentedIcon = btnIcon;
