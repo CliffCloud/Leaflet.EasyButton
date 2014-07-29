@@ -105,7 +105,7 @@
                         ]
       $( function(){
         for ( i=0; i<3 ; i++){
-          var funk = 'L.easyButton(\'' + promptIcon[i] + '\', <br/>              ' + functions[i] + ',<br/>             \''+ hoverText[i] +'\'<br/>            })'
+          var funk = 'L.easyButton(\'' + promptIcon[i] + '\', <br/>              ' + functions[i] + ',<br/>             \''+ hoverText[i] +'\'<br/>            )'
           $('#para' + i).append('<pre>'+funk+'</pre>')
           explaination = $('<p>').attr({'style':'text-align:right;'}).append('This created the <i class=\'fa ' + promptIcon[i] +'\'></i> button.')
           $('#para' + i).append(explaination)
