@@ -17,9 +17,9 @@ L.Control.EasyButtons = L.Control.extend({
 
         return container;
     },
-    
+
     intendedFunction: function(){ alert('no function selected');},
-  
+
     _click: function (e) {
         L.DomEvent.stopPropagation(e);
         L.DomEvent.preventDefault(e);
@@ -30,17 +30,19 @@ L.Control.EasyButtons = L.Control.extend({
 L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap ) {
   var newControl = new L.Control.EasyButtons;
   if (btnIcon) newControl.options.intentedIcon = btnIcon;
-  
+
   if ( typeof btnFunction === 'function'){
     newControl.intendedFunction = btnFunction;
-  } 
-  
+  }
+
   if (btnTitle) newControl.options.title = btnTitle;
-  
-  if ( btnMap ){
-    newControl.addTo(btnMap);
+
+  if ( btnMap == '' ){
+    // skip auto addition
+  } else if ( btnMap ) {
+    btnMap.addControl(newControl);
   } else {
-    newControl.addTo(map);
+    map.addControl(newControl);
   }
   return newControl;
 };
