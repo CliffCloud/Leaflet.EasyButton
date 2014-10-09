@@ -63,6 +63,8 @@
               <p id='para1'></p>
               <hr/>
               <p id='para2'></p>
+              <hr/>
+              <p id='para3'></p>
             </div>
           </div> 
         </div>
@@ -79,7 +81,7 @@
       </div>
 
     </div>
-    
+
   </body>
   <foot>
     <script>
@@ -90,10 +92,12 @@
     <script>
       var promptIcon    = ['fa-comment',
                            'fa-compass',
-                           'fa-strikethrough']
+                           'fa-strikethrough',
+                           'glyphicon-stats']
       var hoverText     = ['',
                            'Interact with the map',
-                           'Interact with the document']
+                           'Interact with the document',
+                           'A Bootstrap glyphicon']
       var functions   = [
               function (){alert('hello!')},
               function (){
@@ -101,13 +105,14 @@
               },
               function (){
                 $('h1').css('text-decoration','line-through')
-              }
-                        ]
+              },
+              function (){alert('I am a Bootstrap glyphicon')}
+          ]
       $( function(){
-        for ( i=0; i<3 ; i++){
+        for ( i = 0; i < promptIcon.length ; i++){
           var funk = 'L.easyButton(\'' + promptIcon[i] + '\', <br/>              ' + functions[i] + ',<br/>             \''+ hoverText[i] +'\'<br/>            )'
           $('#para' + i).append('<pre>'+funk+'</pre>')
-          explaination = $('<p>').attr({'style':'text-align:right;'}).append('This created the <i class=\'fa ' + promptIcon[i] +'\'></i> button.')
+          explaination = $('<p>').attr({'style':'text-align:right;'}).append('This created the <i class="' + promptIcon[i] + (promptIcon[i].lastIndexOf('fa', 0) === 0 ? ' fa fa-lg' : ' glyphicon') + '"></i> button.')
           $('#para' + i).append(explaination)
           L.easyButton( promptIcon[i] , functions[i] , hoverText[i] )
         }(i);
