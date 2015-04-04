@@ -1,5 +1,7 @@
-### Easily Add Control Buttons for Leaflet
+### Demo for [L.EasyButton][Demo]
 
-Relevant documentation and implementation in the [Demo][].
+*NB:* don't merge master into this branch, instead
+
+    $ git checkout master easy-button.js
 
 [Demo]:http://cliffcloud.github.io/Leaflet.EasyButton/
