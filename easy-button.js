@@ -2,7 +2,7 @@ L.Control.EasyButtons = L.Control.extend({
     options: {
         position: 'topleft',
         title: '',
-        intentedIcon: 'fa-circle-o'
+        intendedIcon: 'fa-circle-o'
     },
 
     onAdd: function () {
@@ -27,16 +27,17 @@ L.Control.EasyButtons = L.Control.extend({
     },
 
     _addImage: function () {
-        var extraClasses = this.options.intentedIcon.lastIndexOf('fa', 0) === 0 ? ' fa fa-lg' : ' glyphicon';
+        var extraClasses = this.options.intendedIcon.lastIndexOf('fa', 0) === 0 ? ' fa fa-lg' : ' glyphicon';
 
-        var icon = L.DomUtil.create('i', this.options.intentedIcon + extraClasses, this.link);
+        var icon = L.DomUtil.create('i', this.options.intendedIcon + extraClasses, this.link);
         icon.id = this.options.id;
     }
 });
 
 L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap , btnId) {
   var newControl = new L.Control.EasyButtons;
-  if (btnIcon) newControl.options.intentedIcon = btnIcon;
+
+  if (btnIcon) newControl.options.intendedIcon = btnIcon;
   if (btnId) newControl.options.id = btnId;
 
   if ( typeof btnFunction === 'function'){
