@@ -9,7 +9,7 @@ L.Control.EasyButtons = L.Control.extend({
         var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
 
         this.link = L.DomUtil.create('a', 'leaflet-bar-part', container);
-        L.DomUtil.create('i', 'fa fa-lg ' + this.options.intentedIcon , this.link);
+        this._addImage()
         this.link.href = '#';
 
         L.DomEvent.on(this.link, 'click', this._click, this);
@@ -25,11 +25,19 @@ L.Control.EasyButtons = L.Control.extend({
         L.DomEvent.preventDefault(e);
         this.intendedFunction();
     },
+
+    _addImage: function () {
+        var extraClasses = this.options.intentedIcon.lastIndexOf('fa', 0) === 0 ? ' fa fa-lg' : ' glyphicon';
+
+        var icon = L.DomUtil.create('i', this.options.intentedIcon + extraClasses, this.link);
+        icon.id = this.options.id;
+    }
 });
 
-L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap ) {
+L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap , btnId) {
   var newControl = new L.Control.EasyButtons;
   if (btnIcon) newControl.options.intentedIcon = btnIcon;
+  if (btnId) newControl.options.id = btnId;
 
   if ( typeof btnFunction === 'function'){
     newControl.intendedFunction = btnFunction;
