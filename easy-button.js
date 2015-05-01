@@ -35,7 +35,7 @@ L.Control.EasyButtons = L.Control.extend({
 });
 
 L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap , btnId) {
-  var newControl = new L.Control.EasyButtons;
+  var newControl = new L.Control.EasyButtons();
 
   if (btnIcon) newControl.options.intendedIcon = btnIcon;
   if (btnId) newControl.options.id = btnId;
@@ -46,7 +46,7 @@ L.easyButton = function( btnIcon , btnFunction , btnTitle , btnMap , btnId) {
 
   if (btnTitle) newControl.options.title = btnTitle;
 
-  if ( btnMap == '' ){
+  if ( btnMap === '' ){
     // skip auto addition
   } else if ( btnMap ) {
     btnMap.addControl(newControl);
