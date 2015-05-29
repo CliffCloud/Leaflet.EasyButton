@@ -24,6 +24,7 @@ L.Control.EasyButtons = L.Control.extend({
         L.DomEvent.stopPropagation(e);
         L.DomEvent.preventDefault(e);
         this.intendedFunction();
+        this.link.blur();
     },
 
     _addImage: function () {
