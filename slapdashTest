@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo -e   "========= current branches ==========\n"
+
+git branch
+
+echo -e "\n== which one do you want to test? ===\n"
+
+read branch
+
+git co $branch easy-button.js
+
+echo -e "\n==========================\n"
+echo    "   starting localhost:8080    "
+echo -e "\n==========================\n"
+
+python -m SimpleHTTPServer 8080
+
