@@ -3,25 +3,29 @@
   <head>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <meta charset=utf-8 />
-    <title>Leaflet.EasyButton</title>
+    <title>Leaflet.EasyButton "testing"</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
     <script src="easy-button.js"></script>
     <style>
+      html, body{
+        width: 100%;
+      }
       #map{
-        width: 500px;
+        width: 800px;
         height: 500px;
+        margin: auto;
       }
     </style>
   </head>
 
   <body>
-    <h1 id="target">
-      Leaflet.EasyButton
-    </h1>
+    <h1 id="target"> Leaflet.EasyButton "testing" </h1>
     <div id='map' class='img-responsive'></div>
-
   </body>
   <foot>
 <script>
@@ -29,6 +33,10 @@ var map = L.map('map', {}).setView([37.8, -96], 4);
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 L.easyButton('fa-bullhorn').addTo(map);
+L.easyButton('fa-fire').addTo(map);
+L.easyButton('fa-facebook').addTo(map);
+L.easyButton('fa-circle').addTo(map);
+L.easyButton('glyphicon-pencil').addTo(map);
 </script>
   </foot>
 </html>
