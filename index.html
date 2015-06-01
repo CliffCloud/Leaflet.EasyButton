@@ -5,8 +5,6 @@
     <meta charset=utf-8 />
     <title>Leaflet.EasyButton "testing"</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
@@ -32,11 +30,54 @@
 var map = L.map('map', {}).setView([37.8, -96], 4);
 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-L.easyButton('fa-bullhorn').addTo(map);
-L.easyButton('fa-fire').addTo(map);
-L.easyButton('fa-facebook').addTo(map);
-L.easyButton('fa-circle').addTo(map);
-L.easyButton('glyphicon-pencil').addTo(map);
+L.easyButton('fa-circle', function(){alert('you clicked the circle')}).addTo(map);
+L.easyButton({
+              id: 'maryland',
+              icon: 'glyphicon-pencil',
+              title: 'zoom to maryland',
+              callback: function(){
+                // zoom to the maryland
+              },
+            }).addTo(map);
+
+var three = L.easyButton({
+              id: 'blargety',
+              animate: false,
+              type: 'static',
+              states:[
+                {
+                  stateName: 'unloaded',
+                  callback: function(){
+                    // TODO: Should be using something more practical `loacation`
+                    three.state('loading');
+                    var img = document.createElement('img');
+                    img.addEventListener('load', function(){
+                      three.state('loaded');
+                      document.body.appendChild(img);
+                    })
+                    img.setAttribute('width','500');
+                    img.setAttribute('height','500');
+                    img.setAttribute('src','http://www.race.u-tokyo.ac.jp/~uchida/blogdata/dataset1_community_large.png');
+                  },
+                  title: 'load image',
+                  icon: 'fa-picture-o'
+                },
+                {
+                  stateName: 'loading',
+                  callback: function(){},
+                  title: 'loading',
+                  icon: 'fa-spinner fa-spin'
+                },
+                {
+                  stateName: 'loaded',
+                  callback: function(){ console.log('i') },
+                  title: 'loaded',
+                  icon: 'fa-check'
+                }
+              ]
+            })
+three.addTo(map);
+
 </script>
   </foot>
 </html>
