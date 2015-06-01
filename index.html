@@ -53,6 +53,7 @@ var three = L.easyButton({
                     var img = document.createElement('img');
                     img.addEventListener('load', function(){
                       three.state('loaded');
+                      three.disable();
                       document.body.appendChild(img);
                     })
                     img.setAttribute('width','500');
