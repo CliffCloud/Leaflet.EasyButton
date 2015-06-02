@@ -1,41 +1,52 @@
 (function(){
 
 L.Control.EasyButton = L.Control.extend({
+
   options: {
-    // position:  'topleft',  // part of leaflet's defaults
+    position:  'topleft', // part of leaflet's defaults
 
-    id:        null,          // an id to tag the container with
+    id:        null,      // an id to tag the container with
 
-    type:      'replace',     // [(replace|animate)]
+    type:      'replace', // [(replace|animate)]
+                          // replace swaps out elements
+                          // animate changes classes with all elements inserted
 
-    auto:      'CYCLE',       // [(CYCLE|FORWARD|REV-CYCLE|BACK)]
+    auto:      'NOOP',    // [(CYCLE|FORWARD|REVERSE-CYCLE|BACK|NOOP)]
+                          // CYCLE => after callback go to the next state (loop to beginning from the end)
+                          // FORWARD => after callback go to the next state (stop at end)
+                          // REVERSE-CYCLE => after callback go to the previous state (loop to the end from the beginning)
+                          // BACK => after callback go to the next state (stop at beginning)
+                          // NOOP => no operation
 
-    states:[],                // state names look like this
-                              // {
-                              //   stateName: 'untracked',
-                              //   callback: function(){ track_Something(); this.state('tracking'); },
-                              //   title: 'click to make inactive',
-                              //   icon: 'fa-circle',    // wrapped with <a>
-                              // }
+    states:    [],        // state names look like this
+                          // {
+                          //   stateName: 'untracked',
+                          //   callback: function(){ track_Something(); this.state('tracking'); },
+                          //   title: 'click to make inactive',
+                          //   icon: 'fa-circle',    // wrapped with <a>
+                          // }
 
-    extraHtml: null,          // extra html to be inserted in
-                              // the container. useful for indicators
+    extraHtml: null,      // extra html to be inserted in
+                          // the container. useful for indicators
   },
+
+
 
   initialize: function(uno, dos, tres){
 
     // is the last item an object?
-    if( arguments[arguments.length-1] && typeof arguments[arguments.length-1] === "object" ){
+    if( typeof arguments[arguments.length-1] === "object" ){
+
       // if so, it should be the options
       L.Util.setOptions( this, arguments[arguments.length-1] );
     }
 
-
     //if there aren't any states set manually
     if( this.options.states.length === 0 ){
+
       // if the uno argument is a string, set it
       if( uno && typeof uno  === "string"){
-        this.options.icon = uno;
+        L.Util.setOptions( this, { icon: uno});
       }
 
       // if the dos argument is a function, set it
@@ -44,88 +55,91 @@ L.Control.EasyButton = L.Control.extend({
       }
 
       // turn the options object into a state
-      this.options.states.push(L.extend(this.options));
+      this.options.states.push(Object.create(this.options));
     }
+
+    console.log(this.options.states)
 
     this._states = curateStates(this);
 
   },
 
-  onAdd: function () {
 
-    // build and return the container. It'll look like this:
-    //
-    // <div class="leaflet-bar leaflet-control">
-    //   <a class="leaflet-bar-part" href="javascript:void(0)">
-    //     <!-- built `icon:` value -->
-    //   </a>
-    // </div>
+
+  onAdd: function () {
 
     this.container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
     this.options.id && (this.container.id = this.options.id);
-    this.container.appendChild(this._currentState.icon);
+
+    if(this.options.type == 'replace'){
+      this.container.appendChild(this._currentState.icon);
+    } else {
+      for(var i=0;i<this._states.length;i++){
+        this.container.appendChild(this._states[i].icon);
+      }
+    }
 
     this.state(0);
 
     return this.container;
   },
 
+
+
   _currentState: {
+    // placeholder content
     stateName: 'unnamed',
     icon: (function(){ return document.createElement('span'); })()
-  }, // no state yet
-  _states: null, // no built state
+  },
+
+
+
+  _states: null, // populated on init
+
+
 
   state: function(newState){
-    var self = this;
 
     if(typeof newState == "string"){
       switch (newState){
-        case "CYCLE":
-        case "NEXT":
-          this._next();
+        case "FORWARD":
+          this._forward();
           break;
-        case "REV-CYCLE":
-        case "PREV":
-        case "PREVIOUS":
-          this._prev();
+        case "CYCLE":
+        case "FORWARD-CYCLE":
+          this._forwardCycle();
+          break;
+        case "REVERSE":
+          this._reverse();
+          break;
+        case "REVERSE-CYCLE":
+          this._reverseCycle();
+          break;
+        case "NOOP":
           break;
         default:
-          toName(newState);
+          this._activateStateNamed(newState);
+          break;
       }
     } else if (typeof newState == "number"){
       this._activateState(this._states[newState]);
     }
 
     return this;
-
   },
 
-  _next: function(){
-    var index = this._states.indexOf(this._currentState);
-    index++;
-    if( this._states.length <= index ){
-      this._activateState(this._states[index]);
-    } else {
-      this._activateState(this._states[0]);
-    }
-  },
 
-  _prev: function(){
-    var index = this._states.indexOf(this._currentState);
-    index--;
-    if( index >= 0 ){
-      this._activateState(this._states[index]);
-    } else {
-      this._activateState(this._states[this._states.length]);
+  _activateStateNamed: function(stateName){
+    for(var i = 0; i < this._states.length; i++){
+      if( this._states[i].stateName == stateName ){
+        this._activateState( this._states[i] );
+      }
     }
   },
 
   _activateState: function(newState){
-    console.log(this.container);
-    console.log(this._currentState.icon);
 
-    if( this.options.animate ){
+    if( this.options.type == 'replace' ){
       this.container.appendChild(newState.icon);
       this.container.removeChild(this._currentState.icon);
     }
@@ -139,11 +153,59 @@ L.Control.EasyButton = L.Control.extend({
     this._currentState = newState;
   },
 
+
+
+  _forward: function(){
+    var index = this._states.indexOf(this._currentState);
+    index++;
+    if( this._states.length <= index ){
+      this._activateState(this._states[index]);
+    }
+  },
+
+
+
+  _reverse: function(){
+    var index = this._states.indexOf(this._currentState);
+    index--;
+    if( index >= 0 ){
+      this._activateState(this._states[index]);
+    }
+  },
+
+
+
+  _forwardCycle: function(){
+    var index = this._states.indexOf(this._currentState);
+    index++;
+    if( this._states.length <= index ){
+      this._activateState(this._states[index]);
+    } else {
+      this._activateState(this._states[0]);
+    }
+  },
+
+
+
+  _reverseCycle: function(){
+    var index = this._states.indexOf(this._currentState);
+    index--;
+    if( index >= 0 ){
+      this._activateState(this._states[index]);
+    } else {
+      this._activateState(this._states[this._states.length]);
+    }
+  },
+
+
+
   enable: function(){
     L.DomUtil.addClass(this.container, 'enabled');
     L.DomUtil.removeClass(this.container, 'disabled');
     return this;
   },
+
+
 
   disable: function(){
     L.DomUtil.addClass(this.container, 'disabled');
@@ -215,6 +277,7 @@ function curateStates(easyButton){
 
     cleanState.icon = L.DomUtil.create('a', 'easy-button-button leaflet-bar-part');
     cleanState.icon.href = 'javascript:void(0);';
+    state.title && (cleanState.icon.title = state.title);
     cleanState.icon.innerHTML = buildIcon(state.icon);
 
     L.DomEvent
