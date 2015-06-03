@@ -21,8 +21,8 @@ L.Control.EasyButton = L.Control.extend({
     states:    [],        // state names look like this
                           // {
                           //   stateName: 'untracked',
-                          //   callback: function(){ track_Something(); this.state('tracking'); },
-                          //   onclick: function(){ handle_nav_manually(); };
+                          //   onEnter: function(){ track_Something(); this.state('tracking'); },
+                          //   onClick: function(){ handle_nav_manually(); };
                           //   title: 'click to make inactive',
                           //   icon: 'fa-circle',    // wrapped with <a>
                           // }
@@ -54,7 +54,7 @@ L.Control.EasyButton = L.Control.extend({
 
       // if the dos argument is a function, set it
       if( dos && typeof dos === 'function'){
-        L.Util.setOptions( this, { callback: dos});
+        L.Util.setOptions( this, { onEnter: dos});
       }
 
       // turn the options object into a state
@@ -145,7 +145,7 @@ L.Control.EasyButton = L.Control.extend({
 
   _activateState: function(newState){
 
-    newState.callback();
+    newState.onEnter();
 
     // don't touch the dom if it'll just be the same after
     if( newState.icon !== this._currentState.icon){
@@ -298,13 +298,13 @@ function curateStates(thisEasyButton){
     cleanState.icon.href = 'javascript:void(0);';
     state.title && (cleanState.icon.title = state.title);
     cleanState.icon.innerHTML = buildIcon(state.icon);
-    cleanState.callback = L.Util.bind(state.callback, newThis);
-    cleanState.onclick = L.Util.bind(state.onclick?state.onclick:function(){}, newThis);
+    cleanState.onEnter = L.Util.bind(state.onEnter, newThis);
+    cleanState.onClick = L.Util.bind(state.onClick?state.onClick:function(){}, newThis);
 
     L.DomEvent.addListener(cleanState.icon,'click', function(e){
       L.DomEvent.stop(e);
       this._map.getContainer().focus();
-      cleanState.onclick();
+      cleanState.onClick();
       this.state(this.options.auto);
     }, newThis);
 
