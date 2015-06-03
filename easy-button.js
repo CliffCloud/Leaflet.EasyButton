@@ -34,6 +34,8 @@ L.Control.EasyButton = L.Control.extend({
 
   initialize: function(uno, dos, tres){
 
+    this.options.states = [];
+
     // is the last item an object?
     if( typeof arguments[arguments.length-1] === "object" ){
 
