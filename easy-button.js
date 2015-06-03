@@ -11,7 +11,7 @@ L.Control.EasyButton = L.Control.extend({
                           // replace swaps out elements
                           // animate changes classes with all elements inserted
 
-    auto:      'NOOP',    // [(CYCLE|FORWARD|REVERSE-CYCLE|BACK|NOOP)]
+    auto:      'CYCLE',   // [(CYCLE|FORWARD|REVERSE-CYCLE|BACK|NOOP)]
                           // CYCLE => after callback go to the next state (loop to beginning from the end)
                           // FORWARD => after callback go to the next state (stop at end)
                           // REVERSE-CYCLE => after callback go to the previous state (loop to the end from the beginning)
@@ -73,7 +73,9 @@ L.Control.EasyButton = L.Control.extend({
 
     this.container.innerHTML = this.options.extraHTML;
 
+    // prep the contents of the control
     if(this.options.type == 'replace'){
+      this._currentState = this._states[0];
       this.container.appendChild(this._currentState.icon);
     } else {
       for(var i=0;i<this._states.length;i++){
@@ -81,7 +83,7 @@ L.Control.EasyButton = L.Control.extend({
       }
     }
 
-    this.state(0);
+    //this.state(0);
 
     return this.container;
   },
@@ -142,21 +144,31 @@ L.Control.EasyButton = L.Control.extend({
 
   _activateState: function(newState){
 
-    if( this.options.type == 'replace' ){
-      this.container.appendChild(newState.icon);
-      this.container.removeChild(this._currentState.icon);
+    newState.callback();
+
+    // don't touch the dom if it'll just be the same after
+    if( newState.icon !== this._currentState.icon){
+
+      // swap out elements... if you're into that kind of thing
+      if( this.options.type == 'replace' ){
+        this.container.appendChild(newState.icon);
+        this.container.removeChild(this._currentState.icon);
+      }
+
+      // update classes for animations
+      for(var i=0;i<this._states.length;i++){
+        L.DomUtil.removeClass(this._states[i].icon, this._currentState.stateName + '-active');
+        L.DomUtil.addClass(this._states[i].icon, newState.stateName + '-active');
+      }
+
+      // update classes for animations
+      L.DomUtil.removeClass(this.container, this._currentState.stateName + '-active');
+      L.DomUtil.addClass(this.container, newState.stateName + '-active');
+
+      // update the record
+      this._currentState = newState;
+
     }
-
-    // update classes
-    for(var i=0;i<this._states.length;i++){
-      L.DomUtil.removeClass(this._states[i].icon, this._currentState.stateName + '-active');
-      L.DomUtil.addClass(this._states[i].icon, newState.stateName + '-active');
-    }
-
-    L.DomUtil.removeClass(this.container, this._currentState.stateName + '-active');
-    L.DomUtil.addClass(this.container, newState.stateName + '-active');
-
-    this._currentState = newState;
   },
 
 
@@ -285,41 +297,34 @@ function curateStates(easyButton){
     cleanState.icon.href = 'javascript:void(0);';
     state.title && (cleanState.icon.title = state.title);
     cleanState.icon.innerHTML = buildIcon(state.icon);
+    cleanState.callback = L.Util.bind(state.callback, newThis);
 
-    L.DomEvent
-      .addListener(
-        cleanState.icon,
-        'click',
-        boundWithAuto(state.callback, newThis)
-      );
+    L.DomEvent.addListener(
+      cleanState.icon,
+      'click',
+      autoHandler(newThis)
+    );
 
     return cleanState;
   }
 }
 
-function boundWithAuto(usersCallback, ebObject){
-  var callback = usersCallback,
-      tmp = ebObject.options.auto,
+function autoHandler(ebObject){
+  var autonav = ebObject.options.auto,
       cleanup = L.DomUtil.false,
-      end = L.Util.bind(function(){
+      stateNavigation = L.Util.bind(function(){
         this._map.getContainer().focus();
         cleanup();
       }, ebObject);
-  if( typeof callback == 'function'){
-    callback = L.Util.bind(callback, ebObject);
-  } else {
-    callback = L.Util.false
-  }
 
   if( ebObject.options.auto ){
-    cleanup = L.Util.bind(function(){ this.state(tmp) }, ebObject);
+    cleanup = L.Util.bind(function(){ this.state(autonav) }, ebObject);
   }
 
   // will have `this` set approprately
   return function(e){
     L.DomEvent.stop(e);
-    callback();
-    end();
+    stateNavigation();
   };
 
 }
