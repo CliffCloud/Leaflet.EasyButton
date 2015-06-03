@@ -146,9 +146,12 @@ L.Control.EasyButton = L.Control.extend({
 
     // update classes
     for(var i=0;i<this._states.length;i++){
-      L.DomUtil.removeClass(this._states[i].icon, this._currentState.stateName + '-active')
-      L.DomUtil.addClass(this._states[i].icon, newState.stateName + '-active')
+      L.DomUtil.removeClass(this._states[i].icon, this._currentState.stateName + '-active');
+      L.DomUtil.addClass(this._states[i].icon, newState.stateName + '-active');
     }
+
+    L.DomUtil.removeClass(this.container, this._currentState.stateName + '-active');
+    L.DomUtil.addClass(this.container, newState.stateName + '-active');
 
     this._currentState = newState;
   },
