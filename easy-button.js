@@ -22,6 +22,7 @@ L.Control.EasyButton = L.Control.extend({
                           // {
                           //   stateName: 'untracked',
                           //   callback: function(){ track_Something(); this.state('tracking'); },
+                          //   onclick: function(){ handle_nav_manually(); };
                           //   title: 'click to make inactive',
                           //   icon: 'fa-circle',    // wrapped with <a>
                           // }
@@ -233,7 +234,7 @@ L.Control.EasyButton = L.Control.extend({
 
 });
 
-L.easyButton = function(){
+L.easyButton = function(one, two, three){
   var args = Array.prototype.concat.apply([L.Control.EasyButton],arguments)
   return new (Function.prototype.bind.apply(L.Control.EasyButton, args));
 };
@@ -276,13 +277,13 @@ function buildIcon(ambiguousIconString) {
   return tmpIcon;
 }
 
-function curateStates(easyButton){
+function curateStates(thisEasyButton){
   var curatedStates = [],
-      dirtyStates = easyButton.options.states;
+      dirtyStates = thisEasyButton.options.states;
 
 
-  for(var i = 0; i < easyButton.options.states.length; i++){
-    curatedStates.push( curateState(easyButton.options.states[i], easyButton) );
+  for(var i = 0; i < thisEasyButton.options.states.length; i++){
+    curatedStates.push( curateState(thisEasyButton.options.states[i], thisEasyButton) );
   }
 
   return curatedStates;
@@ -298,35 +299,17 @@ function curateStates(easyButton){
     state.title && (cleanState.icon.title = state.title);
     cleanState.icon.innerHTML = buildIcon(state.icon);
     cleanState.callback = L.Util.bind(state.callback, newThis);
+    cleanState.onclick = L.Util.bind(state.onclick?state.onclick:function(){}, newThis);
 
-    L.DomEvent.addListener(
-      cleanState.icon,
-      'click',
-      autoHandler(newThis)
-    );
+    L.DomEvent.addListener(cleanState.icon,'click', function(e){
+      L.DomEvent.stop(e);
+      this._map.getContainer().focus();
+      cleanState.onclick();
+      this.state(this.options.auto);
+    }, newThis);
 
     return cleanState;
   }
-}
-
-function autoHandler(ebObject){
-  var autonav = ebObject.options.auto,
-      cleanup = L.DomUtil.false,
-      stateNavigation = L.Util.bind(function(){
-        this._map.getContainer().focus();
-        cleanup();
-      }, ebObject);
-
-  if( ebObject.options.auto ){
-    cleanup = L.Util.bind(function(){ this.state(autonav) }, ebObject);
-  }
-
-  // will have `this` set approprately
-  return function(e){
-    L.DomEvent.stop(e);
-    stateNavigation();
-  };
-
 }
 
 })();
