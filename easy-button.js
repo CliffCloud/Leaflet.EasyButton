@@ -36,6 +36,7 @@ L.Control.EasyButton = L.Control.extend({
   initialize: function(uno, dos, tres){
 
     this.options.states = [];
+    this.storage = {};
 
     // is the last item an object?
     if( typeof arguments[arguments.length-1] === "object" ){
@@ -145,7 +146,7 @@ L.Control.EasyButton = L.Control.extend({
 
   _activateState: function(newState){
 
-    newState.onEnter();
+    newState.onEnter(this);
 
     // don't touch the dom if it'll just be the same after
     if( newState.icon !== this._currentState.icon){
@@ -304,7 +305,7 @@ function curateStates(thisEasyButton){
     L.DomEvent.addListener(cleanState.icon,'click', function(e){
       L.DomEvent.stop(e);
       this._map.getContainer().focus();
-      cleanState.onClick();
+      cleanState.onClick(newThis);
       this.state(this.options.auto);
     }, newThis);
 
