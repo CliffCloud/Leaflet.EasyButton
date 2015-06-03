@@ -34,6 +34,24 @@ var one = L.easyButton('fa-circle', function(){alert('you clicked the circle')})
 console.log(one.options);
 one.addTo(map);
 
+var toggle = L.easyButton({
+  id: 'switch',
+  type: 'replace',
+  auto: 'CYCLE',
+  states: [{
+    stateName: 'check',
+    callback: function() {},
+    title: 'just a check',
+    icon: 'fa-check'
+  }, {
+    stateName: 'spinningX',
+    callback: function() {},
+    title: 'spinning x',
+    icon: 'fa-times fa-spin'
+  }]
+});
+toggle.addTo(map);
+
 L.easyButton({
               id: 'maryland',
               icon: 'glyphicon-pencil',
@@ -44,7 +62,7 @@ L.easyButton({
             }).addTo(map);
 
 var three = L.easyButton({
-              id: 'blargety',
+              id: 'imgLoader',
               type: 'replace',
               states:[
                 {
