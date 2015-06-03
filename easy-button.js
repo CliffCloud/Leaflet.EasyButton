@@ -26,7 +26,7 @@ L.Control.EasyButton = L.Control.extend({
                           //   icon: 'fa-circle',    // wrapped with <a>
                           // }
 
-    extraHtml: null,      // extra html to be inserted in
+    extraHTML: null,      // extra html to be inserted in
                           // the container. useful for indicators
   },
 
@@ -70,6 +70,8 @@ L.Control.EasyButton = L.Control.extend({
 
     this.container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
     this.options.id && (this.container.id = this.options.id);
+
+    this.container.innerHTML = this.options.extraHTML;
 
     if(this.options.type == 'replace'){
       this.container.appendChild(this._currentState.icon);
