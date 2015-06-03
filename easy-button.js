@@ -114,6 +114,7 @@ L.Control.EasyButton = L.Control.extend({
         case "REVERSE":
           this._reverse();
           break;
+        case "REV-CYCLE":
         case "REVERSE-CYCLE":
           this._reverseCycle();
           break;
@@ -163,7 +164,7 @@ L.Control.EasyButton = L.Control.extend({
   _forward: function(){
     var index = this._states.indexOf(this._currentState);
     index++;
-    if( this._states.length <= index ){
+    if( index < this._states.length ){
       this._activateState(this._states[index]);
     }
   },
@@ -183,7 +184,7 @@ L.Control.EasyButton = L.Control.extend({
   _forwardCycle: function(){
     var index = this._states.indexOf(this._currentState);
     index++;
-    if( this._states.length <= index ){
+    if( index < this._states.length ){
       this._activateState(this._states[index]);
     } else {
       this._activateState(this._states[0]);
@@ -198,7 +199,7 @@ L.Control.EasyButton = L.Control.extend({
     if( index >= 0 ){
       this._activateState(this._states[index]);
     } else {
-      this._activateState(this._states[this._states.length]);
+      this._activateState(this._states[this._states.length - 1]);
     }
   },
 
@@ -298,7 +299,8 @@ function curateStates(easyButton){
 
 function boundWithAuto(usersCallback, ebObject){
   var callback = usersCallback,
-      cleanup = L.DomUtil.false;
+      tmp = ebObject.options.auto,
+      cleanup = L.DomUtil.false,
       end = L.Util.bind(function(){
         this._map.getContainer().focus();
         cleanup();
@@ -310,7 +312,7 @@ function boundWithAuto(usersCallback, ebObject){
   }
 
   if( ebObject.options.auto ){
-    cleanup = L.Util.bind(function(){ this.state(this.options.auto) }, ebObject);
+    cleanup = L.Util.bind(function(){ this.state(tmp) }, ebObject);
   }
 
   // will have `this` set approprately
