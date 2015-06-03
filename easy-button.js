@@ -60,8 +60,6 @@ L.Control.EasyButton = L.Control.extend({
       this.options.states.push(Object.create(this.options));
     }
 
-    console.log(this.options.states)
-
     this._states = curateStates(this);
 
   },
@@ -295,8 +293,11 @@ function curateStates(easyButton){
 
 function boundWithAuto(usersCallback, ebObject){
   var callback = usersCallback,
-      auto = L.DomUtil.false;
-
+      cleanup = L.DomUtil.false;
+      end = L.Util.bind(function(){
+        this._map.getContainer().focus();
+        cleanup();
+      }, ebObject);
   if( typeof callback == 'function'){
     callback = L.Util.bind(callback, ebObject);
   } else {
@@ -304,14 +305,14 @@ function boundWithAuto(usersCallback, ebObject){
   }
 
   if( ebObject.options.auto ){
-    auto = L.Util.bind(function(){ this.state(this.options.auto) }, ebObject);
+    cleanup = L.Util.bind(function(){ this.state(this.options.auto) }, ebObject);
   }
 
   // will have `this` set approprately
   return function(e){
     L.DomEvent.stop(e);
     callback();
-    auto();
+    end();
   };
 
 }
