@@ -85,8 +85,6 @@ L.Control.EasyButton = L.Control.extend({
       }
     }
 
-    //this.state(0);
-
     return this.container;
   },
 
@@ -262,7 +260,7 @@ function buildIcon(ambiguousIconString) {
       tmpIcon = L.DomUtil.create('span', '', this.link);
 
       if( ambiguousIconString.indexOf('fa-') === 0 ){
-        L.DomUtil.addClass(tmpIcon, "fa fa-lg "  + ambiguousIconString)
+        L.DomUtil.addClass(tmpIcon, 'fa fa-lg '  + ambiguousIconString)
 
       } else if ( ambiguousIconString.indexOf('glyphicon-') === 0 ) {
         L.DomUtil.addClass(tmpIcon, "glyphicon " + ambiguousIconString)
@@ -297,9 +295,14 @@ function curateStates(thisEasyButton){
 
     cleanState.icon = L.DomUtil.create('a', 'easy-button-button leaflet-bar-part');
     cleanState.icon.href = 'javascript:void(0);';
+    state.stateName && L.DomUtil.addClass(cleanState.icon, 'state-' + state.stateName.trim());
     state.title && (cleanState.icon.title = state.title);
     cleanState.icon.innerHTML = buildIcon(state.icon);
-    cleanState.onEnter = L.Util.bind(state.onEnter, newThis);
+    if( typeof state.onEnter == 'function'){
+      cleanState.onEnter = L.Util.bind(state.onEnter, newThis);
+    } else {
+      cleanState.onEnter = function(){};
+    }
     cleanState.onClick = L.Util.bind(state.onClick?state.onClick:function(){}, newThis);
 
     L.DomEvent.addListener(cleanState.icon,'click', function(e){
