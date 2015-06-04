@@ -3,39 +3,35 @@
 L.Control.EasyButton = L.Control.extend({
 
   options: {
-    position:  'topleft', // part of leaflet's defaults
+    position:  'topleft',       // part of leaflet's defaults
 
-    id:        null,      // an id to tag the container with
+    id:        null,            // an id to tag the container with
 
-    type:      'replace', // [(replace|animate)]
-                          // replace swaps out elements
-                          // animate changes classes with all elements inserted
+    type:      'replace',       // [(replace|animate)]
+                                // replace swaps out elements
+                                // animate changes classes with all elements inserted
 
-    auto:      'CYCLE',   // [(CYCLE|FORWARD|REVERSE-CYCLE|BACK|NOOP)]
-                          // CYCLE => after callback go to the next state (loop to beginning from the end)
-                          // FORWARD => after callback go to the next state (stop at end)
-                          // REVERSE-CYCLE => after callback go to the previous state (loop to the end from the beginning)
-                          // BACK => after callback go to the next state (stop at beginning)
-                          // NOOP => no operation
+    states:    [],              // state names look like this
+                                // {
+                                //   stateName: 'untracked',
+                                //   onClick: function(){ handle_nav_manually(); };
+                                //   title: 'click to make inactive',
+                                //   icon: 'fa-circle',    // wrapped with <a>
+                                // }
 
-    states:    [],        // state names look like this
-                          // {
-                          //   stateName: 'untracked',
-                          //   onEnter: function(){ track_Something(); this.state('tracking'); },
-                          //   onClick: function(){ handle_nav_manually(); };
-                          //   title: 'click to make inactive',
-                          //   icon: 'fa-circle',    // wrapped with <a>
-                          // }
+    extraHTML:       null,      // extra html to be inserted in
+                                // the container. useful for indicators
 
-    extraHTML: null,      // extra html to be inserted in
-                          // the container. useful for indicators
   },
 
 
 
   initialize: function(uno, dos, tres){
 
+    // clear the states manually
     this.options.states = [];
+
+    // give em a fresh storage area
     this.storage = {};
 
     // is the last item an object?
@@ -45,7 +41,8 @@ L.Control.EasyButton = L.Control.extend({
       L.Util.setOptions( this, arguments[arguments.length-1] );
     }
 
-    //if there aren't any states set manually
+    // if there aren't any states in options
+    // check the args
     if( this.options.states.length === 0 ){
 
       // if the uno argument is a string, set it
@@ -55,7 +52,7 @@ L.Control.EasyButton = L.Control.extend({
 
       // if the dos argument is a function, set it
       if( dos && typeof dos === 'function'){
-        L.Util.setOptions( this, { onEnter: dos});
+        L.Util.setOptions( this, { onClick: dos});
       }
 
       // turn the options object into a state
@@ -104,29 +101,14 @@ L.Control.EasyButton = L.Control.extend({
 
   state: function(newState){
 
+    // activate by name
     if(typeof newState == "string"){
-      switch (newState){
-        case "FORWARD":
-          this._forward();
-          break;
-        case "CYCLE":
-        case "FORWARD-CYCLE":
-          this._forwardCycle();
-          break;
-        case "REVERSE":
-          this._reverse();
-          break;
-        case "REV-CYCLE":
-        case "REVERSE-CYCLE":
-          this._reverseCycle();
-          break;
-        case "NOOP":
-          break;
-        default:
-          this._activateStateNamed(newState);
-          break;
-      }
+
+      this._activateStateNamed(newState);
+
+    // activate by index
     } else if (typeof newState == "number"){
+
       this._activateState(this._states[newState]);
     }
 
@@ -143,8 +125,6 @@ L.Control.EasyButton = L.Control.extend({
   },
 
   _activateState: function(newState){
-
-    newState.onEnter(this);
 
     // don't touch the dom if it'll just be the same after
     if( newState.icon !== this._currentState.icon){
@@ -298,18 +278,12 @@ function curateStates(thisEasyButton){
     state.stateName && L.DomUtil.addClass(cleanState.icon, 'state-' + state.stateName.trim());
     state.title && (cleanState.icon.title = state.title);
     cleanState.icon.innerHTML = buildIcon(state.icon);
-    if( typeof state.onEnter == 'function'){
-      cleanState.onEnter = L.Util.bind(state.onEnter, newThis);
-    } else {
-      cleanState.onEnter = function(){};
-    }
     cleanState.onClick = L.Util.bind(state.onClick?state.onClick:function(){}, newThis);
 
     L.DomEvent.addListener(cleanState.icon,'click', function(e){
       L.DomEvent.stop(e);
       this._map.getContainer().focus();
       cleanState.onClick(newThis);
-      this.state(this.options.auto);
     }, newThis);
 
     return cleanState;
