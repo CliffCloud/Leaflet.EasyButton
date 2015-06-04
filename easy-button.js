@@ -60,31 +60,15 @@ L.Control.EasyButton = L.Control.extend({
       this.options.states.push(Object.create(this.options));
     }
 
-    this._states = curateStates(this);
 
-  },
+    // curate and move user's states into
+    // the _states for internal use
+    this._states = [];
 
-
-
-  onAdd: function () {
-
-    this.container = L.DomUtil.create('div');
-    this.options.leafletClasses && L.DomUtil.addClass(this.container, 'leaflet-bar leaflet-control');
-    this.options.id && (this.container.id = this.options.id);
-
-    this.container.innerHTML = this.options.extraHTML;
-
-    // prep the contents of the control
-    if(this.options.type == 'replace'){
-      this._currentState = this._states[0];
-      this.container.appendChild(this._currentState.icon);
-    } else {
-      for(var i=0;i<this._states.length;i++){
-        this.container.appendChild(this._states[i].icon);
-      }
+    for(var i = 0; i < this.options.states.length; i++){
+      this._states.push( new State(this.options.states[i], this) );
     }
 
-    return this.container;
   },
 
 
@@ -211,6 +195,29 @@ L.Control.EasyButton = L.Control.extend({
     L.DomUtil.addClass(this.container, 'disabled');
     L.DomUtil.removeClass(this.container, 'enabled');
     return this;
+  },
+
+
+
+  onAdd: function () {
+
+    this.container = L.DomUtil.create('div');
+    this.options.leafletClasses && L.DomUtil.addClass(this.container, 'leaflet-bar leaflet-control');
+    this.options.id && (this.container.id = this.options.id);
+
+    this.container.innerHTML = this.options.extraHTML;
+
+    // prep the contents of the control
+    if(this.options.type == 'replace'){
+      this._currentState = this._states[0];
+      this.container.appendChild(this._currentState.icon);
+    } else {
+      for(var i=0;i<this._states.length;i++){
+        this.container.appendChild(this._states[i].icon);
+      }
+    }
+
+    return this.container;
   }
 
 });
@@ -226,6 +233,33 @@ L.easyButton = function(one, two, three){
  *
  *************************/
 
+// constructor for states so only curated
+// states end up getting called
+function State(template, easyButton){
+
+  this.title = template.title;
+  this.stateName = template.stateName;
+
+  // build the wrapper
+  this.icon = L.DomUtil.create('a');
+  this.icon.href = 'javascript:void(0);';
+  if (easyButton.options.leafletClasses){
+    L.DomUtil.addClass(this.icon, 'easy-button-button leaflet-bar-part');
+  }
+
+  template.stateName && L.DomUtil.addClass(this.icon, 'template-' + template.stateName.trim());
+  template.title && (this.icon.title = template.title);
+  this.icon.innerHTML = buildIcon(template.icon);
+  this.onClick = L.Util.bind(template.onClick?template.onClick:function(){}, this);
+
+  L.DomEvent.addListener(this.icon,'click', function(e){
+    L.DomEvent.stop(e);
+    easyButton._map.getContainer().focus();
+    this.onClick(easyButton);
+  }, this);
+
+}
+
 function buildIcon(ambiguousIconString) {
 
   var tmpIcon;
@@ -237,7 +271,9 @@ function buildIcon(ambiguousIconString) {
     // so move forward as such
     tmpIcon = ambiguousIconString;
 
-  } else { // it's a class list, figure out what kind
+  // then it wasn't html, so
+  // it's a class list, figure out what kind
+  } else {
       ambiguousIconString = ambiguousIconString.trim();
       tmpIcon = L.DomUtil.create('span', '', this.link);
 
@@ -256,41 +292,6 @@ function buildIcon(ambiguousIconString) {
   }
 
   return tmpIcon;
-}
-
-function curateStates(thisEasyButton){
-  var curatedStates = [],
-      dirtyStates = thisEasyButton.options.states;
-
-
-  for(var i = 0; i < thisEasyButton.options.states.length; i++){
-    curatedStates.push( curateState(thisEasyButton.options.states[i], thisEasyButton) );
-  }
-
-  return curatedStates;
-
-  function curateState(state, newThis){
-    var cleanState = {};
-
-    cleanState.title = state.title;
-    cleanState.stateName = state.stateName;
-
-    cleanState.icon = L.DomUtil.create('a');
-    newThis.options.leafletClasses && L.DomUtil.addClass(cleanState.icon, 'easy-button-button leaflet-bar-part');
-    cleanState.icon.href = 'javascript:void(0);';
-    state.stateName && L.DomUtil.addClass(cleanState.icon, 'state-' + state.stateName.trim());
-    state.title && (cleanState.icon.title = state.title);
-    cleanState.icon.innerHTML = buildIcon(state.icon);
-    cleanState.onClick = L.Util.bind(state.onClick?state.onClick:function(){}, newThis);
-
-    L.DomEvent.addListener(cleanState.icon,'click', function(e){
-      L.DomEvent.stop(e);
-      this._map.getContainer().focus();
-      cleanState.onClick(newThis);
-    }, newThis);
-
-    return cleanState;
-  }
 }
 
 })();
