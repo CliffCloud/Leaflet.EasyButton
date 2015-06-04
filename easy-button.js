@@ -22,6 +22,7 @@ L.Control.EasyButton = L.Control.extend({
     extraHTML:       null,      // extra html to be inserted in
                                 // the container. useful for indicators
 
+    leafletClasses:   true,     // use leaflet styles for the button
   },
 
 
@@ -67,7 +68,8 @@ L.Control.EasyButton = L.Control.extend({
 
   onAdd: function () {
 
-    this.container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+    this.container = L.DomUtil.create('div');
+    this.options.leafletClasses && L.DomUtil.addClass(this.container, 'leaflet-bar leaflet-control');
     this.options.id && (this.container.id = this.options.id);
 
     this.container.innerHTML = this.options.extraHTML;
@@ -273,7 +275,8 @@ function curateStates(thisEasyButton){
     cleanState.title = state.title;
     cleanState.stateName = state.stateName;
 
-    cleanState.icon = L.DomUtil.create('a', 'easy-button-button leaflet-bar-part');
+    cleanState.icon = L.DomUtil.create('a');
+    newThis.options.leafletClasses && L.DomUtil.addClass(cleanState.icon, 'easy-button-button leaflet-bar-part');
     cleanState.icon.href = 'javascript:void(0);';
     state.stateName && L.DomUtil.addClass(cleanState.icon, 'state-' + state.stateName.trim());
     state.title && (cleanState.icon.title = state.title);
