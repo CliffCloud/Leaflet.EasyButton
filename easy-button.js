@@ -216,6 +216,7 @@ L.Control.EasyButton = L.Control.extend({
         this.container.appendChild(this._states[i].icon);
       }
     }
+    this._activateState(this._states[0]);
 
     return this.container;
   }
@@ -247,10 +248,10 @@ function State(template, easyButton){
     L.DomUtil.addClass(this.icon, 'easy-button-button leaflet-bar-part');
   }
 
-  template.stateName && L.DomUtil.addClass(this.icon, 'template-' + template.stateName.trim());
+  template.stateName && L.DomUtil.addClass(this.icon, 'state-' + template.stateName.trim());
   template.title && (this.icon.title = template.title);
   this.icon.innerHTML = buildIcon(template.icon);
-  this.onClick = L.Util.bind(template.onClick?template.onClick:function(){}, this);
+  this.onClick = L.Util.bind(template.onClick?template.onClick:function(){}, easyButton);
 
   L.DomEvent.addListener(this.icon,'click', function(e){
     L.DomEvent.stop(e);
