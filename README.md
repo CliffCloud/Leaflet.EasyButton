@@ -26,14 +26,15 @@ generally, it's:
     }).addTo(map);
 
 Changes from the original:
-  * The Name
+  * The Constructor Name
     * now: `L.Control.EasyButton ` (no trailing 's')
     * was: `L.Control.EasyButtons` (trailing 's')
+    * most likely, you were using the factory, `L.easyButton` which is still the same
   * function signature
     * now:
       * `<icon:string(see above)>`,`<callback:function>` ( friendly! )
       * `<icon:string(see above)>`,`<callback:function>`,`<options:object>`
-      * `<options:object>`
+      * `<options:object>` ( fancy )
     * was:
       * `<icon:fa or glyphicon class>`,`<callback:function>`,`<map:leaflet-map>`,`<button-title:string>`,`<button-id:string>`
 
@@ -44,10 +45,12 @@ Changes from the original:
       * `'some Random classes-you-want'` will be added to a span element in the button
         (if your using a different icon library)
       * `'<div>&equiv;</div>'` you can also put valid html inside!
-    * cycle/toggle - switch between button states, updating values accordingly
     * enable/disable - disable & enable the button
-
+      *     /* with an extra line of css */
+            .leaflet-control.disabled{
+              pointer-events: none;
+              opacity: .5;
+            }
 #### hey
 
-if you use html for your icon, L.easyButton won't try to overwrite it;
-`id` will be ignored. `title` will still work
+The `id` param sets the `id` attribute on the container. Not the button itself.
