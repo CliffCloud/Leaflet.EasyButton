@@ -154,7 +154,7 @@ L.Control.EasyButton = L.Control.extend({
 
   onAdd: function () {
 
-    this.container = L.DomUtil.create('div');
+    this.container = L.DomUtil.create('div', '');
     this.options.leafletClasses && L.DomUtil.addClass(this.container, 'leaflet-bar leaflet-control');
     this.button = L.DomUtil.create('button', '', this.container);
     this.options.id && (this.button.id = this.options.id);
@@ -201,7 +201,7 @@ function State(template, easyButton){
   this.stateName = template.stateName;
 
   // build the wrapper
-  this.icon = L.DomUtil.create('span');
+  this.icon = L.DomUtil.create('span', '');
   if (easyButton.options.leafletClasses){
     L.DomUtil.addClass(this.icon, 'easy-button-button leaflet-bar-part');
   }
@@ -227,7 +227,7 @@ function buildIcon(ambiguousIconString) {
   // it's a class list, figure out what kind
   } else {
       ambiguousIconString = ambiguousIconString.trim();
-      tmpIcon = L.DomUtil.create('span');
+      tmpIcon = L.DomUtil.create('span', '');
 
       if( ambiguousIconString.indexOf('fa-') === 0 ){
         L.DomUtil.addClass(tmpIcon, 'fa fa-lg '  + ambiguousIconString)
