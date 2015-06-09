@@ -5,7 +5,7 @@ L.Control.EasyButton = L.Control.extend({
   options: {
     position:  'topleft',       // part of leaflet's defaults
 
-    id:        null,            // an id to tag the container with
+    id:        null,            // an id to tag the button with
 
     type:      'replace',       // [(replace|animate)]
                                 // replace swaps out elements
@@ -18,9 +18,6 @@ L.Control.EasyButton = L.Control.extend({
                                 //   title: 'click to make inactive',
                                 //   icon: 'fa-circle',    // wrapped with <a>
                                 // }
-
-    extraHTML:       null,      // extra html to be inserted in
-                                // the container. useful for indicators
 
     leafletClasses:   true,     // use leaflet styles for the button
   },
@@ -117,8 +114,8 @@ L.Control.EasyButton = L.Control.extend({
 
       // swap out elements... if you're into that kind of thing
       if( this.options.type == 'replace' ){
-        this.container.appendChild(newState.icon);
-        this.container.removeChild(this._currentState.icon);
+        this.button.appendChild(newState.icon);
+        this.button.removeChild(this._currentState.icon);
       }
 
       // update classes for animations
@@ -128,8 +125,8 @@ L.Control.EasyButton = L.Control.extend({
       }
 
       // update classes for animations
-      L.DomUtil.removeClass(this.container, this._currentState.stateName + '-active');
-      L.DomUtil.addClass(this.container, newState.stateName + '-active');
+      L.DomUtil.removeClass(this.button, this._currentState.stateName + '-active');
+      L.DomUtil.addClass(this.button, newState.stateName + '-active');
 
       // update the record
       this._currentState = newState;
@@ -139,61 +136,17 @@ L.Control.EasyButton = L.Control.extend({
 
 
 
-  _forward: function(){
-    var index = this._states.indexOf(this._currentState);
-    index++;
-    if( index < this._states.length ){
-      this._activateState(this._states[index]);
-    }
-  },
-
-
-
-  _reverse: function(){
-    var index = this._states.indexOf(this._currentState);
-    index--;
-    if( index >= 0 ){
-      this._activateState(this._states[index]);
-    }
-  },
-
-
-
-  _forwardCycle: function(){
-    var index = this._states.indexOf(this._currentState);
-    index++;
-    if( index < this._states.length ){
-      this._activateState(this._states[index]);
-    } else {
-      this._activateState(this._states[0]);
-    }
-  },
-
-
-
-  _reverseCycle: function(){
-    var index = this._states.indexOf(this._currentState);
-    index--;
-    if( index >= 0 ){
-      this._activateState(this._states[index]);
-    } else {
-      this._activateState(this._states[this._states.length - 1]);
-    }
-  },
-
-
-
   enable: function(){
-    L.DomUtil.addClass(this.container, 'enabled');
-    L.DomUtil.removeClass(this.container, 'disabled');
+    L.DomUtil.addClass(this.button, 'enabled');
+    L.DomUtil.removeClass(this.button, 'disabled');
     return this;
   },
 
 
 
   disable: function(){
-    L.DomUtil.addClass(this.container, 'disabled');
-    L.DomUtil.removeClass(this.container, 'enabled');
+    L.DomUtil.addClass(this.button, 'disabled');
+    L.DomUtil.removeClass(this.button, 'enabled');
     return this;
   },
 
@@ -203,17 +156,23 @@ L.Control.EasyButton = L.Control.extend({
 
     this.container = L.DomUtil.create('div');
     this.options.leafletClasses && L.DomUtil.addClass(this.container, 'leaflet-bar leaflet-control');
-    this.options.id && (this.container.id = this.options.id);
+    this.button = L.DomUtil.create('button', '', this.container);
+    this.options.id && (this.button.id = this.options.id);
 
-    this.container.innerHTML = this.options.extraHTML;
+    L.DomEvent.addListener(this.button,'click', function(e){
+      L.DomEvent.stop(e);
+      this._map.getContainer().focus();
+      this._currentState.onClick(this, this._map ? this._map : null );
+    }, this);
+
 
     // prep the contents of the control
     if(this.options.type == 'replace'){
       this._currentState = this._states[0];
-      this.container.appendChild(this._currentState.icon);
+      this.button.appendChild(this._currentState.icon);
     } else {
       for(var i=0;i<this._states.length;i++){
-        this.container.appendChild(this._states[i].icon);
+        this.button.appendChild(this._states[i].icon);
       }
     }
     this._activateState(this._states[0]);
@@ -223,7 +182,7 @@ L.Control.EasyButton = L.Control.extend({
 
 });
 
-L.easyButton = function(one, two, three){
+L.easyButton = function(/* args will pass automatically */){
   var args = Array.prototype.concat.apply([L.Control.EasyButton],arguments)
   return new (Function.prototype.bind.apply(L.Control.EasyButton, args));
 };
@@ -242,8 +201,7 @@ function State(template, easyButton){
   this.stateName = template.stateName;
 
   // build the wrapper
-  this.icon = L.DomUtil.create('a');
-  this.icon.href = 'javascript:void(0);';
+  this.icon = L.DomUtil.create('span');
   if (easyButton.options.leafletClasses){
     L.DomUtil.addClass(this.icon, 'easy-button-button leaflet-bar-part');
   }
@@ -252,13 +210,6 @@ function State(template, easyButton){
   template.title && (this.icon.title = template.title);
   this.icon.innerHTML = buildIcon(template.icon);
   this.onClick = L.Util.bind(template.onClick?template.onClick:function(){}, easyButton);
-
-  L.DomEvent.addListener(this.icon,'click', function(e){
-    L.DomEvent.stop(e);
-    easyButton._map.getContainer().focus();
-    this.onClick(easyButton, easyButton._map ? easyButton._map : null, this.icon);
-  }, this);
-
 }
 
 function buildIcon(ambiguousIconString) {
@@ -276,7 +227,7 @@ function buildIcon(ambiguousIconString) {
   // it's a class list, figure out what kind
   } else {
       ambiguousIconString = ambiguousIconString.trim();
-      tmpIcon = L.DomUtil.create('span', '', this.link);
+      tmpIcon = L.DomUtil.create('span');
 
       if( ambiguousIconString.indexOf('fa-') === 0 ){
         L.DomUtil.addClass(tmpIcon, 'fa fa-lg '  + ambiguousIconString)
