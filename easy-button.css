@@ -39,10 +39,10 @@
   border-bottom: none;
 }
 
-.leaflet-bar button.leaflet-disabled {
+.leaflet-bar button.disabled {
   cursor: default;
-  background-color: #f4f4f4;
-  color: #bbb;
+  pointer-events: none;
+  opacity: .4;
 }
 
 
