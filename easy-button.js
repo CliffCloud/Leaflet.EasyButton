@@ -256,7 +256,7 @@ function State(template, easyButton){
   L.DomEvent.addListener(this.icon,'click', function(e){
     L.DomEvent.stop(e);
     easyButton._map.getContainer().focus();
-    this.onClick(easyButton);
+    this.onClick(easyButton, easyButton._map ? easyButton._map : null, this.icon);
   }, this);
 
 }
