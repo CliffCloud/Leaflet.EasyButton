@@ -29,7 +29,7 @@ L.Control.EasyButton = L.Control.extend({
     // clear the states manually
     this.options.states = [];
 
-    // give em a fresh storage area
+    // storage between state functions
     this.storage = {};
 
     // is the last item an object?
@@ -76,7 +76,7 @@ L.Control.EasyButton = L.Control.extend({
     }
 
     if (this.options.leafletClasses){
-;console.log('      L.DomUtil.addClass(this.button, "easy-button-button leaflet-bar-part");');      L.DomUtil.addClass(this.button, "easy-button-button leaflet-bar-part");
+      L.DomUtil.addClass(this.button, "easy-button-button leaflet-bar-part");
     }
 
     L.DomEvent.addListener(this.button,'click', function(e){
@@ -145,15 +145,21 @@ L.Control.EasyButton = L.Control.extend({
         this.button.removeChild(this._currentState.icon);
       }
 
-      // update classes for animations
-      for(var i=0;i<this._states.length;i++){
-;console.log('        L.DomUtil.removeClass(this._states[i].icon, this._currentState.stateName + "-active");');        L.DomUtil.removeClass(this._states[i].icon, this._currentState.stateName + "-active");
-;console.log('        L.DomUtil.addClass(this._states[i].icon, newState.stateName + "-active");');        L.DomUtil.addClass(this._states[i].icon, newState.stateName + "-active");
+      if( newState.title ){
+        this.button.title = newState.title;
+      } else {
+        this.button.removeAttribute('title');
       }
 
       // update classes for animations
-;console.log('      L.DomUtil.removeClass(this.button, this._currentState.stateName + "-active");');      L.DomUtil.removeClass(this.button, this._currentState.stateName + "-active");
-;console.log('      L.DomUtil.addClass(this.button, newState.stateName + "-active");');      L.DomUtil.addClass(this.button, newState.stateName + "-active");
+      for(var i=0;i<this._states.length;i++){
+        L.DomUtil.removeClass(this._states[i].icon, this._currentState.stateName + '-active');
+        L.DomUtil.addClass(this._states[i].icon, newState.stateName + '-active');
+      }
+
+      // update classes for animations
+      L.DomUtil.removeClass(this.button, this._currentState.stateName + '-active');
+      L.DomUtil.addClass(this.button, newState.stateName + '-active');
 
       // update the record
       this._currentState = newState;
@@ -164,24 +170,35 @@ L.Control.EasyButton = L.Control.extend({
 
 
   enable: function(){
-;console.log('    L.DomUtil.addClass(this.button, "enabled");');    L.DomUtil.addClass(this.button, "enabled");
-;console.log('    L.DomUtil.removeClass(this.button, "disabled");');    L.DomUtil.removeClass(this.button, "disabled");
+    L.DomUtil.addClass(this.button, "enabled");
+    L.DomUtil.removeClass(this.button, "disabled");
     return this;
   },
 
 
 
   disable: function(){
-;console.log('    L.DomUtil.addClass(this.button, "disabled");');    L.DomUtil.addClass(this.button, "disabled");
-;console.log('    L.DomUtil.removeClass(this.button, "enabled");');    L.DomUtil.removeClass(this.button, "enabled");
+    L.DomUtil.addClass(this.button, "disabled");
+    L.DomUtil.removeClass(this.button, "enabled");
     return this;
   },
 
 
+  removeFrom: function (map) {
 
-  onAdd: function () {
-    return L.easyBar([this], this.options).container;
+    console.log( this );
+    this._container.parentNode.removeChild(this._container);
+    this._map = null;
+
+    return this;
+  },
+
+  onAdd: function(){
+    var containerObj = L.easyBar([this], this.options);
+    this._container = containerObj.container;
+    return this._container;
   }
+
 
 });
 
@@ -201,13 +218,12 @@ L.easyButton = function(/* args will pass automatically */){
 function State(template, easyButton){
 
   this.title = template.title;
-  this.stateName = template.stateName;
+  this.stateName = template.stateName ? template.stateName : 'unnamed-state';
 
   // build the wrapper
   this.icon = L.DomUtil.create('span', '');
 
-;console.log('  template.stateName && L.DomUtil.addClass(this.icon, "state-" + template.stateName.trim());');  template.stateName && L.DomUtil.addClass(this.icon, "state-" + template.stateName.trim());
-  template.title && (this.icon.title = template.title);
+  L.DomUtil.addClass(this.icon, "state-" + this.stateName.trim());
   this.icon.innerHTML = buildIcon(template.icon);
   this.onClick = L.Util.bind(template.onClick?template.onClick:function(){}, easyButton);
 }
@@ -230,13 +246,11 @@ function buildIcon(ambiguousIconString) {
       tmpIcon = L.DomUtil.create('span', '');
 
       if( ambiguousIconString.indexOf('fa-') === 0 ){
-;console.log('        L.DomUtil.addClass(tmpIcon, "fa fa-lg "  + ambiguousIconString)');        L.DomUtil.addClass(tmpIcon, "fa fa-lg "  + ambiguousIconString)
-
+        L.DomUtil.addClass(tmpIcon, "fa fa-lg "  + ambiguousIconString)
       } else if ( ambiguousIconString.indexOf('glyphicon-') === 0 ) {
-;console.log('        L.DomUtil.addClass(tmpIcon, "glyphicon " + ambiguousIconString)');        L.DomUtil.addClass(tmpIcon, "glyphicon " + ambiguousIconString)
-
+        L.DomUtil.addClass(tmpIcon, "glyphicon " + ambiguousIconString)
       } else {
-;console.log('        L.DomUtil.addClass(tmpIcon, /*rollwithit*/ ambiguousIconString)');        L.DomUtil.addClass(tmpIcon, /*rollwithit*/ ambiguousIconString)
+        L.DomUtil.addClass(tmpIcon, /*rollwithit*/ ambiguousIconString)
       }
 
       // make this a string so that it's easy to set innerHTML below

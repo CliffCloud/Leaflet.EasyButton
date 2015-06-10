@@ -34,6 +34,7 @@
   border-bottom: none;
 }
 
+.leaflet-bar.disabled,
 .leaflet-bar button.disabled {
   cursor: default;
   pointer-events: none;
