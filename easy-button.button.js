@@ -19,12 +19,12 @@ L.Control.EasyButton = L.Control.extend({
                                 //   icon: 'fa-circle',    // wrapped with <a>
                                 // }
 
-    leafletClasses:   true,     // use leaflet styles for the button
+    leafletClasses:   true      // use leaflet styles for the button
   },
 
 
 
-  initialize: function(uno, dos, tres){
+  initialize: function(icon, onClick, title){
 
     // clear the states manually
     this.options.states = [];
@@ -40,23 +40,18 @@ L.Control.EasyButton = L.Control.extend({
     }
 
     // if there aren't any states in options
-    // check the args
-    if( this.options.states.length === 0 ){
-
-      // if the uno argument is a string, set it
-      if( uno && typeof uno  === "string"){
-        L.Util.setOptions( this, { icon: uno});
-      }
-
-      // if the dos argument is a function, set it
-      if( dos && typeof dos === 'function'){
-        L.Util.setOptions( this, { onClick: dos});
-      }
+    // use the early params
+    if( this.options.states.length === 0 &&
+        typeof icon  === 'string' &&
+        typeof onClick === 'function'){
 
       // turn the options object into a state
-      this.options.states.push(Object.create(this.options));
+      this.options.states.push({
+        icon: icon,
+        onClick: onClick,
+        title: typeof uno  === 'string' ? title : ''
+      });
     }
-
 
     // curate and move user's states into
     // the _states for internal use
@@ -66,8 +61,40 @@ L.Control.EasyButton = L.Control.extend({
       this._states.push( new State(this.options.states[i], this) );
     }
 
+    this._buildButton();
+
+    this._activateState(this._states[0]);
+
   },
 
+  _buildButton: function(){
+
+    this.button = L.DomUtil.create('button', '');
+
+    if (this.options.id ){
+      this.button.id = this.options.id;
+    }
+
+    if (this.options.leafletClasses){
+      L.DomUtil.addClass(this.button, 'easy-button-button leaflet-bar-part');
+    }
+
+    L.DomEvent.addListener(this.button,'click', function(e){
+      L.DomEvent.stop(e);
+      this._map.getContainer().focus();
+      this._currentState.onClick(this, this._map ? this._map : null );
+    }, this);
+
+    // prep the contents of the control
+    if(this.options.type == 'replace'){
+      this._currentState = this._states[0];
+      this.button.appendChild(this._currentState.icon);
+    } else {
+      for(var i=0;i<this._states.length;i++){
+        this.button.appendChild(this._states[i].icon);
+      }
+    }
+  },
 
 
   _currentState: {
@@ -153,31 +180,7 @@ L.Control.EasyButton = L.Control.extend({
 
 
   onAdd: function () {
-
-    this.container = L.DomUtil.create('div', '');
-    this.options.leafletClasses && L.DomUtil.addClass(this.container, 'leaflet-bar leaflet-control');
-    this.button = L.DomUtil.create('button', '', this.container);
-    this.options.id && (this.button.id = this.options.id);
-
-    L.DomEvent.addListener(this.button,'click', function(e){
-      L.DomEvent.stop(e);
-      this._map.getContainer().focus();
-      this._currentState.onClick(this, this._map ? this._map : null );
-    }, this);
-
-
-    // prep the contents of the control
-    if(this.options.type == 'replace'){
-      this._currentState = this._states[0];
-      this.button.appendChild(this._currentState.icon);
-    } else {
-      for(var i=0;i<this._states.length;i++){
-        this.button.appendChild(this._states[i].icon);
-      }
-    }
-    this._activateState(this._states[0]);
-
-    return this.container;
+    return L.easyBar([this], this.options)._container
   }
 
 });
@@ -202,9 +205,6 @@ function State(template, easyButton){
 
   // build the wrapper
   this.icon = L.DomUtil.create('span', '');
-  if (easyButton.options.leafletClasses){
-    L.DomUtil.addClass(this.icon, 'easy-button-button leaflet-bar-part');
-  }
 
   template.stateName && L.DomUtil.addClass(this.icon, 'state-' + template.stateName.trim());
   template.title && (this.icon.title = template.title);
