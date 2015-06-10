@@ -41,6 +41,13 @@
   opacity: .4;
 }
 
+.easy-button-button .button-state{
+  display: block;
+  width: 100%;
+  heigth: 100%;
+  position: relative;
+}
+
 
 .leaflet-touch .leaflet-bar button {
   width: 30px;

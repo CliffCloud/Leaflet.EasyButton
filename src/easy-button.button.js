@@ -226,7 +226,7 @@ function State(template, easyButton){
   // build the wrapper
   this.icon = L.DomUtil.create('span', '');
 
-  L.DomUtil.addClass(this.icon, 'state-' + this.stateName.trim());
+  L.DomUtil.addClass(this.icon, 'button-state state-' + this.stateName.trim());
   this.icon.innerHTML = buildIcon(template.icon);
   this.onClick = L.Util.bind(template.onClick?template.onClick:function(){}, easyButton);
 }
