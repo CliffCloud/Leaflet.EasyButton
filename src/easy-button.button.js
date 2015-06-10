@@ -194,7 +194,10 @@ L.Control.EasyButton = L.Control.extend({
   },
 
   onAdd: function(){
-    var containerObj = L.easyBar([this], this.options);
+    var containerObj = L.easyBar([this], {
+      position: this.options.position,
+      leafletClasses: this.options.leafletClasses
+    });
     this._container = containerObj.container;
     return this._container;
   }
