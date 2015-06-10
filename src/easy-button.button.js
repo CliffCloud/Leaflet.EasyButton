@@ -33,7 +33,7 @@ L.Control.EasyButton = L.Control.extend({
     this.storage = {};
 
     // is the last item an object?
-    if( typeof arguments[arguments.length-1] === "object" ){
+    if( typeof arguments[arguments.length-1] === 'object' ){
 
       // if so, it should be the options
       L.Util.setOptions( this, arguments[arguments.length-1] );
@@ -76,7 +76,7 @@ L.Control.EasyButton = L.Control.extend({
     }
 
     if (this.options.leafletClasses){
-      L.DomUtil.addClass(this.button, "easy-button-button leaflet-bar-part");
+      L.DomUtil.addClass(this.button, 'easy-button-button leaflet-bar-part');
     }
 
     L.DomEvent.addListener(this.button,'click', function(e){
@@ -112,12 +112,12 @@ L.Control.EasyButton = L.Control.extend({
   state: function(newState){
 
     // activate by name
-    if(typeof newState == "string"){
+    if(typeof newState == 'string'){
 
       this._activateStateNamed(newState);
 
     // activate by index
-    } else if (typeof newState == "number"){
+    } else if (typeof newState == 'number'){
 
       this._activateState(this._states[newState]);
     }
@@ -170,16 +170,16 @@ L.Control.EasyButton = L.Control.extend({
 
 
   enable: function(){
-    L.DomUtil.addClass(this.button, "enabled");
-    L.DomUtil.removeClass(this.button, "disabled");
+    L.DomUtil.addClass(this.button, 'enabled');
+    L.DomUtil.removeClass(this.button, 'disabled');
     return this;
   },
 
 
 
   disable: function(){
-    L.DomUtil.addClass(this.button, "disabled");
-    L.DomUtil.removeClass(this.button, "enabled");
+    L.DomUtil.addClass(this.button, 'disabled');
+    L.DomUtil.removeClass(this.button, 'enabled');
     return this;
   },
 
@@ -226,7 +226,7 @@ function State(template, easyButton){
   // build the wrapper
   this.icon = L.DomUtil.create('span', '');
 
-  L.DomUtil.addClass(this.icon, "state-" + this.stateName.trim());
+  L.DomUtil.addClass(this.icon, 'state-' + this.stateName.trim());
   this.icon.innerHTML = buildIcon(template.icon);
   this.onClick = L.Util.bind(template.onClick?template.onClick:function(){}, easyButton);
 }
@@ -251,7 +251,7 @@ function buildIcon(ambiguousIconString) {
       if( ambiguousIconString.indexOf('fa-') === 0 ){
         L.DomUtil.addClass(tmpIcon, 'fa '  + ambiguousIconString)
       } else if ( ambiguousIconString.indexOf('glyphicon-') === 0 ) {
-        L.DomUtil.addClass(tmpIcon, "glyphicon " + ambiguousIconString)
+        L.DomUtil.addClass(tmpIcon, 'glyphicon ' + ambiguousIconString)
       } else {
         L.DomUtil.addClass(tmpIcon, /*rollwithit*/ ambiguousIconString)
       }
