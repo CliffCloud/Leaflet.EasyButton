@@ -49,11 +49,10 @@ L.Control.EasyBar = L.Control.extend({
 
 
   onAdd: function () {
-    return this._container;
+    return this.container;
   },
 
   addTo: function (map) {
-    this.remove();
     this._map = map;
 
     for(var i = 0; i < this._buttons.length; i++){

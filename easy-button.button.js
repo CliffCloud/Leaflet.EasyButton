@@ -76,7 +76,7 @@ L.Control.EasyButton = L.Control.extend({
     }
 
     if (this.options.leafletClasses){
-      L.DomUtil.addClass(this.button, 'easy-button-button leaflet-bar-part');
+;console.log('      L.DomUtil.addClass(this.button, "easy-button-button leaflet-bar-part");');      L.DomUtil.addClass(this.button, "easy-button-button leaflet-bar-part");
     }
 
     L.DomEvent.addListener(this.button,'click', function(e){
@@ -147,13 +147,13 @@ L.Control.EasyButton = L.Control.extend({
 
       // update classes for animations
       for(var i=0;i<this._states.length;i++){
-        L.DomUtil.removeClass(this._states[i].icon, this._currentState.stateName + '-active');
-        L.DomUtil.addClass(this._states[i].icon, newState.stateName + '-active');
+;console.log('        L.DomUtil.removeClass(this._states[i].icon, this._currentState.stateName + "-active");');        L.DomUtil.removeClass(this._states[i].icon, this._currentState.stateName + "-active");
+;console.log('        L.DomUtil.addClass(this._states[i].icon, newState.stateName + "-active");');        L.DomUtil.addClass(this._states[i].icon, newState.stateName + "-active");
       }
 
       // update classes for animations
-      L.DomUtil.removeClass(this.button, this._currentState.stateName + '-active');
-      L.DomUtil.addClass(this.button, newState.stateName + '-active');
+;console.log('      L.DomUtil.removeClass(this.button, this._currentState.stateName + "-active");');      L.DomUtil.removeClass(this.button, this._currentState.stateName + "-active");
+;console.log('      L.DomUtil.addClass(this.button, newState.stateName + "-active");');      L.DomUtil.addClass(this.button, newState.stateName + "-active");
 
       // update the record
       this._currentState = newState;
@@ -164,23 +164,23 @@ L.Control.EasyButton = L.Control.extend({
 
 
   enable: function(){
-    L.DomUtil.addClass(this.button, 'enabled');
-    L.DomUtil.removeClass(this.button, 'disabled');
+;console.log('    L.DomUtil.addClass(this.button, "enabled");');    L.DomUtil.addClass(this.button, "enabled");
+;console.log('    L.DomUtil.removeClass(this.button, "disabled");');    L.DomUtil.removeClass(this.button, "disabled");
     return this;
   },
 
 
 
   disable: function(){
-    L.DomUtil.addClass(this.button, 'disabled');
-    L.DomUtil.removeClass(this.button, 'enabled');
+;console.log('    L.DomUtil.addClass(this.button, "disabled");');    L.DomUtil.addClass(this.button, "disabled");
+;console.log('    L.DomUtil.removeClass(this.button, "enabled");');    L.DomUtil.removeClass(this.button, "enabled");
     return this;
   },
 
 
 
   onAdd: function () {
-    return L.easyBar([this], this.options)._container
+    return L.easyBar([this], this.options).container;
   }
 
 });
@@ -206,7 +206,7 @@ function State(template, easyButton){
   // build the wrapper
   this.icon = L.DomUtil.create('span', '');
 
-  template.stateName && L.DomUtil.addClass(this.icon, 'state-' + template.stateName.trim());
+;console.log('  template.stateName && L.DomUtil.addClass(this.icon, "state-" + template.stateName.trim());');  template.stateName && L.DomUtil.addClass(this.icon, "state-" + template.stateName.trim());
   template.title && (this.icon.title = template.title);
   this.icon.innerHTML = buildIcon(template.icon);
   this.onClick = L.Util.bind(template.onClick?template.onClick:function(){}, easyButton);
@@ -230,13 +230,13 @@ function buildIcon(ambiguousIconString) {
       tmpIcon = L.DomUtil.create('span', '');
 
       if( ambiguousIconString.indexOf('fa-') === 0 ){
-        L.DomUtil.addClass(tmpIcon, 'fa fa-lg '  + ambiguousIconString)
+;console.log('        L.DomUtil.addClass(tmpIcon, "fa fa-lg "  + ambiguousIconString)');        L.DomUtil.addClass(tmpIcon, "fa fa-lg "  + ambiguousIconString)
 
       } else if ( ambiguousIconString.indexOf('glyphicon-') === 0 ) {
-        L.DomUtil.addClass(tmpIcon, "glyphicon " + ambiguousIconString)
+;console.log('        L.DomUtil.addClass(tmpIcon, "glyphicon " + ambiguousIconString)');        L.DomUtil.addClass(tmpIcon, "glyphicon " + ambiguousIconString)
 
       } else {
-        L.DomUtil.addClass(tmpIcon, /*rollwithit*/ ambiguousIconString)
+;console.log('        L.DomUtil.addClass(tmpIcon, /*rollwithit*/ ambiguousIconString)');        L.DomUtil.addClass(tmpIcon, /*rollwithit*/ ambiguousIconString)
       }
 
       // make this a string so that it's easy to set innerHTML below
