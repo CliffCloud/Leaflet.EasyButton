@@ -249,7 +249,7 @@ function buildIcon(ambiguousIconString) {
       tmpIcon = L.DomUtil.create('span', '');
 
       if( ambiguousIconString.indexOf('fa-') === 0 ){
-        L.DomUtil.addClass(tmpIcon, "fa fa-lg "  + ambiguousIconString)
+        L.DomUtil.addClass(tmpIcon, 'fa '  + ambiguousIconString)
       } else if ( ambiguousIconString.indexOf('glyphicon-') === 0 ) {
         L.DomUtil.addClass(tmpIcon, "glyphicon " + ambiguousIconString)
       } else {
