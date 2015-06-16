@@ -6,7 +6,9 @@
 
 ![example](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/dist/img/alert_example.gif)
 
-more [demos and docs](http://danielmontague.com/projects/easyButton.js/v1/examples/)
+proper [demos and docs](http://danielmontague.com/projects/easyButton.js/v1/examples/)
+
+_NB: make sure to include the css and js files!_
 
 ### Options
 
@@ -20,19 +22,17 @@ it's pretty flexible
 
 a the icon string can be:
 
-* `fa-map-marker` or another [font awesome][fontawesome] class
-* `glyphicon-globe` or another [glyphicon][] class
-* `random assortment-of-classes`
-* `<strong>&equiv;</strong>` html
+* `'fa-map-marker'` or another [font awesome](http://fortawesome.github.io/Font-Awesome/icons/) class
+* `'glyphicon-globe'` or another [glyphicon](http://getbootstrap.com/components/#glyphicons-glyphs) class
+* `'random assortment-of-classes'` for custom icons or other icon libraries
+* `'<strong>&equiv;</strong>'` old fashioned html
 
 the callback function:
 
-    myCallback( buttonArg, mapArg ){
+    L.easyButton('-', function( buttonArg, mapArg ){
       buttonArg.doStuff();
       mapArg.doStuff();
-    }
-
-    L.easyButton('fa-gears', myCallback);
+    });
 
 the options object looks like this:
 
