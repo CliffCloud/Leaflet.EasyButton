@@ -1,10 +1,12 @@
 ## L.EasyButton
 
-![example](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/dist/img/alert_example.gif)
+![glimpse](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/dist/img/alert_example.gif)
 
-#### [Demos and Docs](http://danielmontague.com/projects/easyButton.js/v1/examples/)
+### Demos and Docs
 
-### Copy Paste?
+[check them out](http://danielmontague.com/projects/easyButton.js/v1/examples/)
+
+### Copy, Paste, go
 
 
     <link rel="stylesheet" href="https://cdn.rawgit.com/CliffCloud/Leaflet.EasyButton/dd04bbf160aa33c44aa63e8a744b3632c162c340/src/easy-button.css" />
@@ -17,3 +19,5 @@
         helloPopup.setLatLng(map.getCenter()).openOn(map);
       }).addTo( YOUR_LEAFLET_MAP ); // probably just `map`
     </script>
+
+remember to change `YOUR_LEAFLET_MAP` to the var name of your map
