@@ -169,10 +169,14 @@ L.Control.EasyButton = L.Control.extend({
       L.DomUtil.addClass(this.button, 'easy-button-button leaflet-bar-part');
     }
 
+    // don't let double clicks get to the map
+    L.DomEvent.addListener(this.button, 'dblclick', L.DomEvent.stop);
+
+    // take care of normal clicks
     L.DomEvent.addListener(this.button,'click', function(e){
       L.DomEvent.stop(e);
-      this._map.getContainer().focus();
       this._currentState.onClick(this, this._map ? this._map : null );
+      this._map.getContainer().focus();
     }, this);
 
     // prep the contents of the control
