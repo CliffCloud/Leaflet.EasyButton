@@ -1,56 +1,56 @@
-### L.easyButton
+## L.easyButton
 
 > Easily Add Control Buttons for Leaflet
 
-work in progress, not stable yet
+### Use
 
-generally, it's:
+![example](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/dist/img/alert_example.gif)
 
-    L.easyButton('fa-compass', function(){/* your callback */}).addTo(map);
-                //   ^
-                //   Any fontawesome class here!
+more [demos and docs](http://danielmontague.com/projects/easyButton.js/v1/examples/)
 
-    L.easyButton('glyphicon-cloud', function(){/* your callback */}).addTo(map);
-                //   ^
-                //   Any glyphicon class
+### Options
 
-    L.easyButton('<strong>&equiv</strong>', function(){/* your callback */}).addTo(map);
-                //   ^
-                //   valid html here
+the function also accepts objects
+
+    L.easyButton(<options:object>);
+    // or
+    L.easyButton(<icon:string>, <callback:function>, <options:object>);
+
+options look like this:
 
     L.easyButton({
-      callback:  function(){alert('woohoo')}, // whatever you want called on click
-      id:        'target-me-later',           // an id if you want to get this later
-      title:     'hovertext!!!!',             // title for the link (shows on hover)
-      icon:      'fa-bullhorn fa-lg'          // fontawesome class, glyphicon class, or html!
-    }).addTo(map);
+      id: 'id-for-the-button',  // an id for the generated button
+      position: 'topleft',      // inherited from L.Control -- the corner it goes in
+      type: 'replace',          // set to animate when you're comfy with css
+      leafletClasses: true,     // use leaflet classes to style the button?
+      states:[{                 // specify different icons and responses for your button
+        stateName: 'get-center',
+        onClick: function(button, map){
+          alert('Map is centered at: ' + map.getCenter().toString());
+        },
+        title: 'show me the middle',
+        icon: 'fa-crosshairs'
+      }]
+    });
 
-Changes from the original:
+### Alternatives
+
+* Follow Leaflet's [docs](http://leafletjs.com/reference.html)
+* Browse around for [something](leafletjs.com/plugins.html) that already does what you want
+* Copy one of [Leaflet's](https://github.com/Leaflet/Leaflet/tree/master/src/control) controls
+
+### etc
+
+Changes from v0:
+  * function signature
+    * now:
+      * friendly: `L.easyButton(<icon:string(see above)>,<callback:function>)`
+      * fancy: `L.easyButton(<options:object>)`
+    * was:
+      * `L.easyButton(<icon:fa or glyphicon class>,<callback:function>,<map:leaflet-map>,<button-title:string>,<button-id:string>)`
   * The Constructor Name
     * now: `L.Control.EasyButton ` (no trailing 's')
     * was: `L.Control.EasyButtons` (trailing 's')
-    * most likely, you were using the factory, `L.easyButton` which is still the same
-  * function signature
-    * now:
-      * `<icon:string(see above)>`,`<callback:function>` ( friendly! )
-      * `<icon:string(see above)>`,`<callback:function>`,`<options:object>`
-      * `<options:object>` ( fancy )
-    * was:
-      * `<icon:fa or glyphicon class>`,`<callback:function>`,`<map:leaflet-map>`,`<button-title:string>`,`<button-id:string>`
+    * Fortunately, you were probably using the factory, `L.easyButton` which is still the same
 
-  * added features
-    * string recognition
-      * `'fa-*** *** ****'` will become font awesome icon
-      * `'glyphicon-*** *** ****'` will become a glyphicon icon
-      * `'some Random classes-you-want'` will be added to a span element in the button
-        (if your using a different icon library)
-      * `'<div>&equiv;</div>'` you can also put valid html inside!
-    * enable/disable - disable & enable the button
-      *     /* with an extra line of css */
-            .leaflet-control.disabled{
-              pointer-events: none;
-              opacity: .5;
-            }
-#### hey
 
-The `id` param sets the `id` attribute on the container. Not the button itself.
