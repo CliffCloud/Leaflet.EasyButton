@@ -10,13 +10,31 @@ more [demos and docs](http://danielmontague.com/projects/easyButton.js/v1/exampl
 
 ### Options
 
-the function also accepts objects
+it's pretty flexible
 
-    L.easyButton(<options:object>);
+    L.easyButton(<icon:string>, <callback:function>);
     // or
     L.easyButton(<icon:string>, <callback:function>, <options:object>);
+    // or
+    L.easyButton(<options:object>);
 
-options look like this:
+a the icon string can be:
+
+* `fa-map-marker` or another [font awesome][fontawesome] class
+* `glyphicon-globe` or another [glyphicon][] class
+* `random assortment-of-classes`
+* `<strong>&equiv;</strong>` html
+
+the callback function:
+
+    myCallback( buttonArg, mapArg ){
+      buttonArg.doStuff();
+      mapArg.doStuff();
+    }
+
+    L.easyButton('fa-gears', myCallback);
+
+the options object looks like this:
 
     L.easyButton({
       id: 'id-for-the-button',  // an id for the generated button
@@ -51,6 +69,4 @@ Changes from v0:
   * The Constructor Name
     * now: `L.Control.EasyButton ` (no trailing 's')
     * was: `L.Control.EasyButtons` (trailing 's')
-    * Fortunately, you were probably using the factory, `L.easyButton` which is still the same
-
-
+    * The factory, `L.easyButton`, is unchanged
