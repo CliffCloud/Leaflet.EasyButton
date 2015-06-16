@@ -51,6 +51,21 @@ the options object looks like this:
       }]
     });
 
+### More
+
+`L.easyButton` now has a partner, `L.easyBar`
+
+    // start with an array of easy buttons
+    var buttons = [ L.easyButton(options),
+                    L.easyButton(options2),
+                    L.easyButton(options3)];
+
+    // build a toolbar with them
+    L.easyBar(buttons).addTo(map);
+
+Buttons that preform related tasks (e.g. zooming in and out) can be
+grouped into bars to convey a theme to the user.
+
 ### Alternatives
 
 * Follow Leaflet's [docs](http://leafletjs.com/reference.html)
