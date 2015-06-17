@@ -181,7 +181,6 @@ L.Control.EasyButton = L.Control.extend({
 
     // prep the contents of the control
     if(this.options.type == 'replace'){
-      this._currentState = this._states[0];
       this.button.appendChild(this._currentState.icon);
     } else {
       for(var i=0;i<this._states.length;i++){
@@ -230,8 +229,12 @@ L.Control.EasyButton = L.Control.extend({
 
   _activateState: function(newState){
 
-    // don't touch the dom if it'll just be the same after
-    if( newState.icon !== this._currentState.icon){
+    if( newState === this._currentState ){
+
+      // don't touch the dom if it'll just be the same after
+      return;
+
+    } else {
 
       // swap out elements... if you're into that kind of thing
       if( this.options.type == 'replace' ){
@@ -280,7 +283,6 @@ L.Control.EasyButton = L.Control.extend({
 
   removeFrom: function (map) {
 
-    console.log( this );
     this._container.parentNode.removeChild(this._container);
     this._map = null;
 
