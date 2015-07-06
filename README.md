@@ -1,16 +1,23 @@
 ## L.EasyButton
 
-![glimpse](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/dist/img/alert_example.gif)
+![running demo](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/dist/img/alert_example.gif)
 
-### Demos and Docs
+### [Demos and Docs](http://danielmontague.com/projects/easyButton.js/v1/examples/)
 
-[check them out](http://danielmontague.com/projects/easyButton.js/v1/examples/)
+-----------------------------------------------------------------------------------
 
-### Copy, Paste, go
+### Boilerplate/Copy-Paste
 
+make sure you have the source included:
 
-    <link rel="stylesheet" href="https://cdn.rawgit.com/CliffCloud/Leaflet.EasyButton/dd04bbf160aa33c44aa63e8a744b3632c162c340/src/easy-button.css" />
-    <script src="https://cdn.rawgit.com/CliffCloud/Leaflet.EasyButton/14332b70b18bdec80f4cce86c643372883bf90aa/src/easy-button.bar.js"></script>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/CliffCloud/Leaflet.EasyButton/f3f3136bda3937aa813c80a1a6c8c921c6df06ed/src/easy-button.css" />
+    <script src="https://cdn.rawgit.com/CliffCloud/Leaflet.EasyButton/f3f3136bda3937aa813c80a1a6c8c921c6df06ed/src/easy-button.js"></script>
+
+and for the examples, remember to change `YOUR_LEAFLET_MAP` to the varable name of your map
+
+##### Hello World
+
+open a popup
 
     <script>
       var helloPopup = L.popup().setContent('Hello World!');
@@ -20,4 +27,42 @@
       }).addTo( YOUR_LEAFLET_MAP ); // probably just `map`
     </script>
 
-remember to change `YOUR_LEAFLET_MAP` to the var name of your map
+##### Map State
+
+set the map's center and use an `img` for the icon
+
+    <script>
+      var antarctica = [-77,70];
+
+      L.easyButton('<img src="/path/to/img/of/penguin.png">', function(btn, map){
+        map.setView(antarctica);
+      }).addTo( YOUR_LEAFLET_MAP );
+    </script>
+
+##### Button States
+
+change the button's function and appearance
+
+    <script>
+      var stateChangingButton = L.easyButton({
+        states: [{
+          stateName: 'zoom-to-school',
+          icon: 'fa-university',
+          title: 'zoom to a school',
+          onClick: function(btn, map) {
+            map.setView([42.3748204,-71.1161913],16);
+            btn.state('zoom-to-forest');
+          }
+        }, {
+          stateName: 'zoom-to-forest',
+          icon: 'fa-tree',
+          title: 'zoom to a forest',
+          onClick: function(btn, map) {
+            map.setView([46.25,-121.8],10);
+            btn.state('zoom-to-school');
+          }
+        }]
+      });
+
+      stateChangingButton.addTo( YOUR_LEAFLET_MAP );
+    </script>
