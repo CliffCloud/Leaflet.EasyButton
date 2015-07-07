@@ -2,7 +2,7 @@
 
 ![running demo](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/dist/img/alert_example.gif)
 
-### [Demos and Docs](http://danielmontague.com/projects/easyButton.js/v1/examples/)
+#### Demos and Docs [Here](http://danielmontague.com/projects/easyButton.js/v1/examples/)
 
 -----------------------------------------------------------------------------------
 
@@ -66,3 +66,6 @@ change the button's function and appearance
 
       stateChangingButton.addTo( YOUR_LEAFLET_MAP );
     </script>
+
+-----------------------------------------------------------------------------------
+read the old docs [here](http://cliffcloud.github.io/Leaflet.EasyButton/)
