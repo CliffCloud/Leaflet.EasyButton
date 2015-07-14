@@ -8,8 +8,10 @@ echo -e "\n== which one do you want to test? ===\n"
 
 read branch
 
-git co $branch easy-button.js
-git reset HEAD easy-button.js
+git co $branch src/easy-button.js
+git reset HEAD src/easy-button.js
+git co $branch src/easy-button.css
+git reset HEAD src/easy-button.css
 
 echo -e "\n==========================\n"
 echo    "   starting localhost:8080    "
