@@ -9,12 +9,29 @@
     <style>
       #map{
         height: 200px;
-        width: 400px;
+        width: 390px;
+        border-radius: 4px;
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
       }
       .content{
+        background: midnightblue;
+        border-radius: 8px;
+        padding: 5px;
         max-width: 400px;
         margin: auto;
-        margin-top: 30%;
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        box-shadow: -2px 3px 7px;
+      }
+      code, pre{
+        border: none 0px transparent;
+      }
+      pre {margin-bottom: 5px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
       }
 html, body {
     width: 100%;
@@ -435,10 +452,9 @@ function buildIcon(ambiguousIconString) {
   <body>
 
   <div class="content">
-    <pre><code>L.easyButton( 'fa-gift', function(){
-  window.location.href = docs_for_v1;
-}).addTo(map);
-    </code></pre>
+    <pre><code>L.easyButton('fa-gift', function(){
+  window.location.href = NEW_DOCS_LOCATION;
+}).addTo(map);</code></pre>
     <div id="map"></div>
     <div id="link" class="hidden alert new-version alert-info" role="alert">
       <strong>Check it out!</strong>
@@ -450,7 +466,7 @@ function buildIcon(ambiguousIconString) {
   </div>
 
     <script>
-      var map = L.map('map', {zoomControl: false, scrollWheelZoom: false}).setView([37.8, -96], 4);
+      var map = L.map('map', {zoomControl: false, scrollWheelZoom: false}).setView([0, 0], 1);
       L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
       var newDocLocation = "http://danielmontague.com/projects/easyButton.js/v1/examples/";
 
