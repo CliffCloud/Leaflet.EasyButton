@@ -41,6 +41,7 @@ L.Control.EasyBar = L.Control.extend({
   enable: function(){
     L.DomUtil.addClass(this.container, 'enabled');
     L.DomUtil.removeClass(this.container, 'disabled');
+    this.container.setAttribute('aria-hidden', 'false');
     return this;
   },
 
@@ -48,6 +49,7 @@ L.Control.EasyBar = L.Control.extend({
   disable: function(){
     L.DomUtil.addClass(this.container, 'disabled');
     L.DomUtil.removeClass(this.container, 'enabled');
+    this.container.setAttribute('aria-hidden', 'true');
     return this;
   },
 
@@ -269,6 +271,7 @@ L.Control.EasyButton = L.Control.extend({
   enable: function(){
     L.DomUtil.addClass(this.button, 'enabled');
     L.DomUtil.removeClass(this.button, 'disabled');
+    this.button.setAttribute('aria-hidden', 'false');
     return this;
   },
 
@@ -277,6 +280,7 @@ L.Control.EasyButton = L.Control.extend({
   disable: function(){
     L.DomUtil.addClass(this.button, 'disabled');
     L.DomUtil.removeClass(this.button, 'enabled');
+    this.button.setAttribute('aria-hidden', 'true');
     return this;
   },
 
