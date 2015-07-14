@@ -139,7 +139,7 @@ L.Control.EasyButton = L.Control.extend({
       this.options.states.push({
         icon: icon,
         onClick: onClick,
-        title: typeof uno  === 'string' ? title : ''
+        title: typeof title === 'string' ? title : ''
       });
     }
 
