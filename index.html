@@ -125,6 +125,22 @@ var four = L.easyButton({
 
 four.addTo(map);
 
+    map.on('zoomend',function(e){
+      var map = e.target,
+          max = map.getMaxZoom(),
+          min = map.getMinZoom(),
+          current = map.getZoom();
+      if( current < max ){ zoomIn.enable() }
+      if( current >= max ){ zoomIn.disable() }
+      if( current > min ){ zoomOut.enable() }
+      if( current <= min ){ zoomOut.disable() }
+    });
+    var zoomBar = L.easyBar([
+      L.easyButton( '<big>+</big>', function(control, map){map.setZoom(map.getZoom()+1);}),
+      L.easyButton('fa-home fa-lg', function(control, map){})
+      L.easyButton('<big>-</big>', function(control, map){map.setZoom(map.getZoom()-1);}),
+    ]);
+    zoomBar.addTo(map);
 
 </script>
   </foot>
