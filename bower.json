@@ -9,6 +9,9 @@
     "src/easy-button.js",
     "src/easy-button.css"
   ],
+  "dependencies": {
+    "leaflet": "~0.7.3"
+  }
   "keywords": [
     "Leaflet",
     "map",
