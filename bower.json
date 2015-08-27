@@ -11,7 +11,7 @@
   ],
   "dependencies": {
     "leaflet": "~0.7.3"
-  }
+  },
   "keywords": [
     "Leaflet",
     "map",
