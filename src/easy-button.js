@@ -326,7 +326,7 @@ function State(template, easyButton){
   // build the wrapper
   this.icon = L.DomUtil.create('span', '');
 
-  L.DomUtil.addClass(this.icon, 'button-state state-' + this.stateName.trim());
+  L.DomUtil.addClass(this.icon, 'button-state state-' + this.stateName.replace(/(^\s*|\s*$)/g,''));
   this.icon.innerHTML = buildIcon(template.icon);
   this.onClick = L.Util.bind(template.onClick?template.onClick:function(){}, easyButton);
 }
@@ -345,7 +345,7 @@ function buildIcon(ambiguousIconString) {
   // then it wasn't html, so
   // it's a class list, figure out what kind
   } else {
-      ambiguousIconString = ambiguousIconString.trim();
+      ambiguousIconString = ambiguousIconString.replace(/(^\s*|\s*$)/g,'');
       tmpIcon = L.DomUtil.create('span', '');
 
       if( ambiguousIconString.indexOf('fa-') === 0 ){
