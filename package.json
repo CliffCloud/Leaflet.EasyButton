@@ -1,0 +1,31 @@
+{
+  "name": "leaflet-easybutton",
+  "version": "1.1.2",
+  "description": "easily add control buttons to your leaflet maps with icon support",
+  "main": "src/easy-button.js",
+  "style": "src/easy-button.css",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CliffCloud/Leaflet.EasyButton.git"
+  },
+  "keywords": [
+    "leaflet",
+    "font-awesome",
+    "glyphicon",
+    "button",
+    "control",
+    "map"
+  ],
+  "author": "rocks.in.the.cloud+easybutton@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CliffCloud/Leaflet.EasyButton/issues"
+  },
+  "homepage": "https://github.com/CliffCloud/Leaflet.EasyButton",
+  "dependencies": {
+    "leaflet": "^0.7.5"
+  }
+}
