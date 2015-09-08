@@ -4,14 +4,19 @@
 
 #### Demos and Docs [Here](http://danielmontague.com/projects/easyButton.js/v1/examples/)
 
+get it
+
+  * `bower install --save Leaflet.EasyButton`
+  * `npm install --save leaflet-easybutton`
+  * you can also copy-paste the
+    [js](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.js)
+    and
+    [css](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.css)
+
 -----------------------------------------------------------------------------------
 
+
 ### Boilerplate/Copy-Paste
-
-make sure you have the source included:
-
-    <link rel="stylesheet" href="https://cdn.rawgit.com/CliffCloud/Leaflet.EasyButton/f3f3136bda3937aa813c80a1a6c8c921c6df06ed/src/easy-button.css" />
-    <script src="https://cdn.rawgit.com/CliffCloud/Leaflet.EasyButton/f3f3136bda3937aa813c80a1a6c8c921c6df06ed/src/easy-button.js"></script>
 
 and for the examples, remember to change `YOUR_LEAFLET_MAP` to the varable name of your map
 
@@ -68,4 +73,5 @@ change the button's function and appearance
     </script>
 
 -----------------------------------------------------------------------------------
+
 read the old docs [here](http://cliffcloud.github.io/Leaflet.EasyButton/)
