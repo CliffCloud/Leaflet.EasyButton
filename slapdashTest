@@ -2,7 +2,7 @@
 
 echo -e   "========= current branches ==========\n"
 
-git branch
+git branch # this will print all the branch options
 
 echo -e "\n== which one do you want to test? ===\n"
 
