@@ -70,7 +70,7 @@ change the button's function and appearance
 
 ## projects using it
 
-  * your page?
+  * submit a pull request to add your page
   * [cliffcloud](http://www.cliffcloud.com/)
   * [the demo page](http://danielmontague.com/projects/easyButton.js/v1/examples/)
 
