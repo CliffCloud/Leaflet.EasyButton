@@ -2,19 +2,18 @@
 
 ![running demo](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/dist/img/alert_example.gif)
 
-#### Demos and Docs [Here](http://danielmontague.com/projects/easyButton.js/v1/examples/)
+### Demos and Docs [Here](http://danielmontague.com/projects/easyButton.js/v1/examples/)
 
 get it
 
   * `bower install --save Leaflet.EasyButton`
   * `npm install --save leaflet-easybutton`
-  * you can also copy-paste the
+  * or just copy-paste the
     [js](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.js)
     and
     [css](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.css)
 
 -----------------------------------------------------------------------------------
-
 
 ### Boilerplate/Copy-Paste
 
@@ -46,20 +45,20 @@ change the button's function and appearance
 
     var stateChangingButton = L.easyButton({
       states: [{
+        stateName: 'zoom-to-forest',   // name the state
+        icon: 'fa-tree',               // and define it's properties
+        title: 'zoom to a forest',     // like it's title
+        onClick: function(btn, map) {  // and it's callback
+          map.setView([46.25,-121.8],10);
+          btn.state('zoom-to-school'); // change state on click!
+        }
+      }, {
         stateName: 'zoom-to-school',
         icon: 'fa-university',
         title: 'zoom to a school',
         onClick: function(btn, map) {
           map.setView([42.3748204,-71.1161913],16);
           btn.state('zoom-to-forest');
-        }
-      }, {
-        stateName: 'zoom-to-forest',
-        icon: 'fa-tree',
-        title: 'zoom to a forest',
-        onClick: function(btn, map) {
-          map.setView([46.25,-121.8],10);
-          btn.state('zoom-to-school');
         }
       }]
     });
@@ -68,12 +67,4 @@ change the button's function and appearance
 
 -----------------------------------------------------------------------------------
 
-## projects using it
-
-  * submit a pull request to add your page
-  * [cliffcloud](http://www.cliffcloud.com/)
-  * [the demo page](http://danielmontague.com/projects/easyButton.js/v1/examples/)
-
------------------------------------------------------------------------------------
-
-read the old docs [here](http://cliffcloud.github.io/Leaflet.EasyButton/)
+read the old/deprecated docs [here](http://cliffcloud.github.io/Leaflet.EasyButton/)
