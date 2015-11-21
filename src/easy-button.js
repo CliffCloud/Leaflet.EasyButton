@@ -116,10 +116,15 @@ L.Control.EasyButton = L.Control.extend({
 
 
 
-  initialize: function(icon, onClick, title){
+  initialize: function(icon, onClick, title, id){
 
     // clear the states manually
     this.options.states = [];
+
+    // add id to options
+    if(id != null){
+      this.options.id = id;
+    }
 
     // storage between state functions
     this.storage = {};
@@ -306,7 +311,7 @@ L.Control.EasyButton = L.Control.extend({
 });
 
 L.easyButton = function(/* args will pass automatically */){
-  var args = Array.prototype.concat.apply([L.Control.EasyButton],arguments)
+  var args = Array.prototype.concat.apply([L.Control.EasyButton],arguments);
   return new (Function.prototype.bind.apply(L.Control.EasyButton, args));
 };
 
