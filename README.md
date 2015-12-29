@@ -51,9 +51,9 @@ change the button's function and appearance
 var stateChangingButton = L.easyButton({
     states: [{
             stateName: 'zoom-to-forest',   // name the state
-            icon:      'fa-tree',          // and define it's properties
-            title:     'zoom to a forest', // like it's title
-            onClick: function(btn, map) {  // and it's callback
+            icon:      'fa-tree',          // and define its properties
+            title:     'zoom to a forest', // like its title
+            onClick: function(btn, map) {  // and its callback
                 map.setView([46.25,-121.8],10);
                 btn.state('zoom-to-school'); // change state on click!
             }
