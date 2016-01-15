@@ -1,23 +1,17 @@
-## L.EasyButton
+# L.EasyButton
+
+The easiest way to add buttons with Leaflet &mdash; so simple it fits in a gif:
 
 ![running demo](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/dist/img/alert_example.gif)
 
-### Demos and Docs [Here](http://danielmontague.com/projects/easyButton.js/v1/examples/)
-
-get it
-
-  * `bower install --save Leaflet.EasyButton`
-  * `npm install --save leaflet-easybutton`
-  * or just copy-paste the
-    [js](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.js)
-    and
-    [css](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.css)
+## [Running Examples and Docs](http://danielmontague.com/projects/easyButton.js/v1/examples/)
 
 -----------------------------------------------------------------------------------
 
-### Boilerplate/Copy-Paste
+## Boilerplate/Copy-Paste Examples
 
-and for the examples, remember to change `YOUR_LEAFLET_MAP` to the varable name of your map
+These use `YOUR_LEAFLET_MAP` as a placeholder;
+remember to change it to the variable name of your map.
 
 ##### Hello World
 
@@ -73,4 +67,28 @@ stateChangingButton.addTo( YOUR_LEAFLET_MAP );
 
 -----------------------------------------------------------------------------------
 
-read the old/deprecated docs [here](http://cliffcloud.github.io/Leaflet.EasyButton/)
+## Download and Install
+
+### Bower
+
+    bower install --save Leaflet.EasyButton
+
+### NPM
+
+    npm install --save leaflet-easybutton
+
+### Copy&Paste Source
+
+here are the links
+the [js](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.js)
+and [css](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.css)
+
+### Curl download
+
+    cd your/project/javascript-files/
+    curl -O https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.js
+    # saved at your/project/javascript-files/easy-button.js
+
+    cd your/project/css-files/
+    curl -O https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.css
+    # saved at your/project/css-files/easy-button.css
