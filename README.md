@@ -4,7 +4,7 @@ The easiest way to add buttons with Leaflet &mdash; so simple it fits in a gif:
 
 ![running demo](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/dist/img/alert_example.gif)
 
-## [Running Examples and Docs](http://danielmontague.com/projects/easyButton.js/v1/examples/)
+### More [running examples and docs](http://danielmontague.com/projects/easyButton.js/v1/examples/)
 
 -----------------------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ stateChangingButton.addTo( YOUR_LEAFLET_MAP );
 
     npm install --save leaflet-easybutton
 
-### Copy&Paste Source
+### Copy & Pasting
 
 here are the links
 the [js](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.js)
@@ -92,3 +92,9 @@ and [css](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master
     cd your/project/css-files/
     curl -O https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.css
     # saved at your/project/css-files/easy-button.css
+
+### Icon Dependencies
+
+If you haven't already, make sure to install/include the icon library of your
+choice (your lib should have its own instructions)
+&mdash; EasyButton should work with anything!
