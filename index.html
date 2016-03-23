@@ -20,6 +20,35 @@
         margin: auto;
       }
     </style>
+    <style>
+      button.easy-button-button {
+        position: relative; }
+      .easy-button-button .button-state {
+        position: absolute;
+        top: 0;
+        left: 0; }
+
+.state-remove-markers,
+.state-add-markers{
+  transition-duration: .5s;
+  transform: scaleY(0);
+  position: absolute;
+  display: block;
+  top: 0;
+  width: 100%;}
+
+.state-remove-markers{
+  transform-origin: 50% 0; }
+.state-add-markers{
+  transform-origin: 50% 100%; }
+
+.state-remove-markers.remove-markers-active{
+  transform: scaleY(1); }
+
+.state-add-markers.add-markers-active{
+  transform: scaleY(1); }
+          </style>
+
   </head>
 
   <body>
@@ -32,6 +61,76 @@
     var map = L.map('map', {}).setView([37.8, -96], 4);
     L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
+    var randomMarkers = L.layerGroup([
+      L.marker([37.8, -110]), L.marker([38.8, -86]), L.marker([47.8, -106]),
+      L.marker([31.8, -120]), L.marker([39.8, -96]), L.marker([33.8, -100]) ]);
+
+    var animatedToggle = L.easyButton({
+        id: 'animated-marker-toggle',
+        type: 'animate',
+        states: [{
+            stateName: 'add-markers',
+            icon: '<span class="star">&starf;</span>',
+            title: 'add some markers',
+            onClick: function (control) {
+                map.addLayer(randomMarkers);
+                control.state('remove-markers');
+            }
+        }, {
+            stateName: 'remove-markers',
+            title: 'remove markers',
+            icon: '<span class="rec">&telrec;</span>',
+            onClick: function (control) {
+                map.removeLayer(randomMarkers);
+                control.state('add-markers');
+            }
+        }]
+    });
+    animatedToggle.addTo(map);
+
+    L.easyBar([
+      L.easyButton({
+          id: 'animated-marker-toggle',
+          states: [{
+              stateName: 'add-markers',
+              icon: '<span class="star">&starf;</span>',
+              title: 'add some markers',
+              onClick: function (control) {
+                  map.addLayer(randomMarkers);
+                  control.state('remove-markers');
+              }
+          }, {
+              stateName: 'remove-markers',
+              title: 'remove markers',
+              icon: '<span class="rec">&telrec;</span>',
+              onClick: function (control) {
+                  map.removeLayer(randomMarkers);
+                  control.state('add-markers');
+              }
+          }]
+      }),
+      L.easyButton({
+          id: 'animated-marker-toggle',
+          type: 'animate',
+          states: [{
+              stateName: 'add-markers',
+              icon: '<span class="star">&starf;</span>',
+              title: 'add some markers',
+              onClick: function (control) {
+                  map.addLayer(randomMarkers);
+                  control.state('remove-markers');
+              }
+          }, {
+              stateName: 'remove-markers',
+              title: 'remove markers',
+              icon: '<span class="rec">&telrec;</span>',
+              onClick: function (control) {
+                  map.removeLayer(randomMarkers);
+                  control.state('add-markers');
+              }
+          }]
+      })
+    ]).addTo(map);
     var toggle = L.easyButton({
         id: 'toggle-check-and-x',
         states: [{
@@ -63,13 +162,13 @@
 <script>
 
 
-/***********************
 L.easyButton('fa-circle', function(){
   alert('you clicked the circle')
 }, 'test me').addTo(map);
 var one = L.easyButton('fa-circle', function(){alert('you clicked the circle')})
 one.addTo(map);
 
+/***************
 var three = L.easyButton({
               id: 'imgLoader',
               states:[
@@ -107,40 +206,6 @@ var three = L.easyButton({
             })
 three.addTo(map);
 
-var four = L.easyButton({
-             id: 'simmmmmmpl',
-             type: 'animate',
-             auto: 'CYCLE',
-             states:[
-               {
-                 stateName: 'unloaded',
-                 onEnter: function(){
-                   console.log('that was a pic');
-                 },
-                 title: 'load taxi',
-                 icon: 'fa-picture-o'
-               },
-               {
-                 stateName: 'ship',
-                 onEnter: function(){
-                   console.log('that ship');
-                 },
-                 title: 'look at gears',
-                 icon: 'fa-ship'
-               },
-               {
-                 stateName: 'gears',
-                 onEnter: function(){
-                   console.log('those were gears');
-                 },
-                 title: 'load to image',
-                 icon: 'fa-gears'
-               },
-             ]
-           })
-
-four.addTo(map);
-
     map.on('zoomend',function(e){
       var map = e.target,
           max = map.getMaxZoom(),
@@ -157,7 +222,7 @@ four.addTo(map);
       L.easyButton('<big>-</big>', function(control, map){map.setZoom(map.getZoom()-1);}),
     ]);
     zoomBar.addTo(map);
-***********************/
+***************/
 
 </script>
   </foot>
