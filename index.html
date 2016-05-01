@@ -165,7 +165,11 @@
 L.easyButton('fa-circle', function(){
   alert('you clicked the circle')
 }, 'test me').addTo(map);
-var one = L.easyButton('fa-circle', function(){alert('you clicked the circle')})
+var one = L.easyButton('fa-circle', function(){
+  alert('you clicked the circle')
+}, {
+  position: 'topright'
+});
 one.addTo(map);
 
 /***************
