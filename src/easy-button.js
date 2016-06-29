@@ -173,7 +173,7 @@ L.Control.EasyButton = L.Control.extend({
     }
 
     if (this.options.leafletClasses){
-      L.DomUtil.addClass(this.button, 'easy-button-button leaflet-bar-part');
+      L.DomUtil.addClass(this.button, 'easy-button-button leaflet-bar-part leaflet-interactive');
     }
 
     // don't let double clicks get to the map
