@@ -111,7 +111,8 @@ L.Control.EasyButton = L.Control.extend({
                                 //   icon: 'fa-circle',    // wrapped with <a>
                                 // }
 
-    leafletClasses:   true      // use leaflet styles for the button
+    leafletClasses:   true,     // use leaflet styles for the button
+    tagName:          'button',
   },
 
 
@@ -166,9 +167,13 @@ L.Control.EasyButton = L.Control.extend({
 
   _buildButton: function(){
 
-    this.button = L.DomUtil.create('button', '');
+    this.button = L.DomUtil.create(this.options.tagName, '');
 
-    this.button.type = 'button';
+    // the next three if statements should be collapsed into the options 
+    // when it's time for breaking changes.
+    if (this.tagName === 'button') {
+        this.button.type = 'button';
+    }
     
     if (this.options.id ){
       this.button.id = this.options.id;
