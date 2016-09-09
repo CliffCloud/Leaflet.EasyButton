@@ -168,6 +168,8 @@ L.Control.EasyButton = L.Control.extend({
 
     this.button = L.DomUtil.create('button', '');
 
+    this.button.type = 'button';
+    
     if (this.options.id ){
       this.button.id = this.options.id;
     }
