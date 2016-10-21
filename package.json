@@ -26,6 +26,6 @@
   },
   "homepage": "https://github.com/CliffCloud/Leaflet.EasyButton",
   "dependencies": {
-    "leaflet": "^0.7.5"
+    "leaflet": "^1.0.1"
   }
 }
