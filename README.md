@@ -8,7 +8,7 @@ The easiest way to add buttons with Leaflet &mdash; so simple it fits in a gif:
 
 -----------------------------------------------------------------------------------
 
-## Boilerplate/Copy-Paste Examples
+## Boilerplate Examples
 
 These use `YOUR_LEAFLET_MAP` as a placeholder;
 remember to change it to the variable name of your map.
@@ -22,7 +22,7 @@ var helloPopup = L.popup().setContent('Hello World!');
 
 L.easyButton('fa-globe', function(btn, map){
     helloPopup.setLatLng(map.getCenter()).openOn(map);
-}).addTo( YOUR_LEAFLET_MAP ); // probably just `map`
+}).addTo( YOUR_LEAFLET_MAP );
 ```
 
 ##### Map State
@@ -30,9 +30,8 @@ L.easyButton('fa-globe', function(btn, map){
 set the map's center and use an `img` for the icon
 
 ```javascript
-var antarctica = [-77,70];
-
 L.easyButton('<img src="/path/to/img/of/penguin.png">', function(btn, map){
+    var antarctica = [-77,70];
     map.setView(antarctica);
 }).addTo( YOUR_LEAFLET_MAP );
 ```
@@ -44,12 +43,12 @@ change the button's function and appearance
 ```javascript
 var stateChangingButton = L.easyButton({
     states: [{
-            stateName: 'zoom-to-forest',   // name the state
-            icon:      'fa-tree',          // and define its properties
-            title:     'zoom to a forest', // like its title
-            onClick: function(btn, map) {  // and its callback
+            stateName: 'zoom-to-forest',        // name the state
+            icon:      'fa-tree',               // and define its properties
+            title:     'zoom to a forest',      // like its title
+            onClick: function(btn, map) {       // and its callback
                 map.setView([46.25,-121.8],10);
-                btn.state('zoom-to-school'); // change state on click!
+                btn.state('zoom-to-school');    // change state on click!
             }
         }, {
             stateName: 'zoom-to-school',
@@ -67,31 +66,23 @@ stateChangingButton.addTo( YOUR_LEAFLET_MAP );
 
 -----------------------------------------------------------------------------------
 
-## Download and Install
+## Download/Install
 
-### Bower
+EasyButton version `2.x.x` and up expect Leaflet `1.x.x` or higher;
+for Leaflet `0.7.x` use EasyButton `1.3.1`.
 
-    bower install --save Leaflet.EasyButton
+### unpkg
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
+    <script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
 
 ### NPM
 
     npm install --save leaflet-easybutton
 
-### Copy & Pasting
+### Bower
 
-here are the links
-the [js](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.js)
-and [css](https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.css)
-
-### Curl download
-
-    cd your/project/javascript-files/
-    curl -O https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.js
-    # saved at your/project/javascript-files/easy-button.js
-
-    cd your/project/css-files/
-    curl -O https://raw.githubusercontent.com/CliffCloud/Leaflet.EasyButton/master/src/easy-button.css
-    # saved at your/project/css-files/easy-button.css
+    bower install --save Leaflet.EasyButton
 
 ### Icon Dependencies
 
