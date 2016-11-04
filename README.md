@@ -69,7 +69,7 @@ stateChangingButton.addTo( YOUR_LEAFLET_MAP );
 ## Download/Install
 
 EasyButton version `2.x.x` and up expect Leaflet `1.x.x` or higher;
-for Leaflet `0.7.x` use EasyButton `1.3.1`.
+for Leaflet `0.7.x` use EasyButton `1.3.x`.
 
 ### unpkg
 
