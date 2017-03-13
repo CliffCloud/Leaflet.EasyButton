@@ -169,10 +169,8 @@ L.Control.EasyButton = L.Control.extend({
 
     this.button = L.DomUtil.create(this.options.tagName, '');
 
-    // the next three if statements should be collapsed into the options
-    // when it's time for breaking changes.
-    if (this.tagName === 'button') {
-        this.button.type = 'button';
+    if (this.options.tagName === 'button') {
+        this.button.setAttribute('type', 'button');
     }
 
     if (this.options.id ){
