@@ -301,9 +301,10 @@ L.Control.EasyButton = L.Control.extend({
     return this._anonymousBar.container;
   },
 
-  remove: function () {
-    if (this._map)
-      this.removeFrom(this._map)
+  removeFrom: function (map) {
+    if (this._map === map)
+      this.remove();
+    return this;
   },
 
 });
