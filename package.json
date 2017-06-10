@@ -4,6 +4,7 @@
   "description": "easily add control buttons to your leaflet maps with icon support",
   "main": "src/easy-button.js",
   "style": "src/easy-button.css",
+  "typings": "src/easy-button.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
