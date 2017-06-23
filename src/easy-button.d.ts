@@ -42,7 +42,7 @@ declare namespace L {
 
     interface EasyButtonState {
         stateName: string
-        onClick: () => void
+        onClick: (btn: L.Control.EasyButton, map: L.Map) => void
         title: string
         icon: string
     }
@@ -50,6 +50,7 @@ declare namespace L {
     namespace Control {
         class EasyButton extends L.Control {
             constructor(options?: EasyButtonOptions)
+            state(stateName: string)
         }
         class EasyBar extends L.Control {
             constructor(options?: EasyBarOptions)
