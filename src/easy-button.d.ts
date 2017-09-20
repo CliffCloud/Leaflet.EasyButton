@@ -1,4 +1,7 @@
-declare namespace L {
+import * as L from 'leaflet'
+
+declare module 'leaflet' {
+
     /**
      * Creates a bar that holds a group of EasyButtons
      * @param buttons array of EasyButtons that will be grouped together in the EasyBar
@@ -50,7 +53,7 @@ declare namespace L {
     namespace Control {
         class EasyButton extends L.Control {
             constructor(options?: EasyButtonOptions)
-            state(stateName: string)
+            state(stateName: string): EasyButton
         }
         class EasyBar extends L.Control {
             constructor(options?: EasyBarOptions)
