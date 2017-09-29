@@ -1,6 +1,6 @@
 {
   "name": "leaflet-easybutton",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "easily add control buttons to your leaflet maps with icon support",
   "main": "src/easy-button.js",
   "style": "src/easy-button.css",
