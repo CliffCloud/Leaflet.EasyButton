@@ -71,18 +71,24 @@ stateChangingButton.addTo( YOUR_LEAFLET_MAP );
 EasyButton version `2.x.x` and up expect Leaflet `1.x.x` or higher;
 for Leaflet `0.7.x` use EasyButton `1.3.x`.
 
-### unpkg
+### jsDelivr
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
-    <script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
+```
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+```
 
 ### NPM
 
-    npm install --save leaflet-easybutton
+```
+npm install --save leaflet-easybutton
+```
 
 ### Bower
 
-    bower install --save Leaflet.EasyButton
+```
+bower install --save Leaflet.EasyButton
+```
 
 ### Icon Dependencies
 
