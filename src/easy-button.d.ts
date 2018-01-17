@@ -76,6 +76,8 @@ declare module 'leaflet' {
       constructor(options?: EasyButtonOptions)
 
       state(stateName: string): EasyButton
+      enable(): void
+      disable(): void
     }
 
     class EasyBar extends L.Control {
