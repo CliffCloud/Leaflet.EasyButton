@@ -87,7 +87,7 @@ L.easyBar = function(){
   for(var i = 0; i < arguments.length; i++){
     args.push( arguments[i] );
   }
-  return new (Function.prototype.bind.apply(L.Control.EasyBar, args));
+  return new (Function.prototype.bind.apply(L.Control.EasyBar, args))();
 };
 
 // L.EasyButton is the actual buttons
@@ -312,7 +312,7 @@ L.Control.EasyButton = L.Control.extend({
 
 L.easyButton = function(/* args will pass automatically */){
   var args = Array.prototype.concat.apply([L.Control.EasyButton],arguments);
-  return new (Function.prototype.bind.apply(L.Control.EasyButton, args));
+  return new (Function.prototype.bind.apply(L.Control.EasyButton, args))();
 };
 
 /*************************
