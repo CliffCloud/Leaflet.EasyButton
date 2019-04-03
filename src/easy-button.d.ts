@@ -1,7 +1,7 @@
 import * as L from 'leaflet'
 import {ControlPosition} from 'leaflet';
 
-declare module 'leaflet' {
+declare module leaflet {
 
   /**
    * Creates a bar that holds a group of EasyButtons
