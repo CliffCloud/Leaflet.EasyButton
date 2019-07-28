@@ -297,6 +297,18 @@ L.Control.EasyButton = L.Control.extend({
     return this;
   },
 
+  setActive: function() {
+    L.DomUtil.addClass(this.button, 'active');
+    this.active = true;
+    return this;
+  },
+
+  setInactive: function() {
+    L.DomUtil.removeClass(this.button, 'active');
+    this.active = false;
+    return this;
+  },
+
   onAdd: function(map){
     var bar = L.easyBar([this], {
       position: this.options.position,
