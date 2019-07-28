@@ -41,6 +41,14 @@
   opacity: .4;
 }
 
+.leaflet-bar button.active {
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  display: block;
+  background-color: lightgrey;
+}
+
 .easy-button-button .button-state{
   display: block;
   width: 100%;
