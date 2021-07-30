@@ -1,4 +1,12 @@
-(function(){
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['leaflet'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = factory(require('leaflet'));
+  } else {
+    root.returnExports = factory(root.L);
+  }
+}(this, function (L) {
 
 // This is for grouping buttons into a bar
 // takes an array of `L.easyButton`s and
@@ -373,4 +381,5 @@ function buildIcon(ambiguousIconString) {
   return tmpIcon;
 }
 
-})();
+return L;
+}));
