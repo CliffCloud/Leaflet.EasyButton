@@ -1,2 +1,6 @@
 /index.html
 node_modules
+
+# IDE
+.idea
+.vscode
