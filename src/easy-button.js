@@ -53,6 +53,15 @@ L.Control.EasyBar = L.Control.extend({
     return this;
   },
 
+  select: function(){
+    L.DomUtil.addClass(this.button, 'selected');
+    return this;
+  },
+
+  unselect: function(){
+    L.DomUtil.removeClass(this.button, 'selected');
+    return this;
+  },
 
   onAdd: function () {
     return this.container;
